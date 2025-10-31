@@ -1,0 +1,1 @@
+import{f as o,a as e}from"../chunks/disclose-version.DCJWNbpt.js";import"../chunks/legacy.CYGijVX6.js";var s=o('<section class="max-w-3xl mx-auto p-8"><h1 class="text-3xl font-bold">Política de Privacidad</h1> <p class="mt-4 text-slate-300">Contenido de privacidad.</p></section>');function n(t){var a=s();e(t,a)}export{n as component};
