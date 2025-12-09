@@ -252,17 +252,6 @@
 <section id="casos" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
   
   <div class="absolute inset-0 -z-30 h-full w-full bg-gray-100">
-    <video
-      class="h-full w-full object-cover opacity-30 grayscale-[20%]"
-      autoplay
-      muted
-      loop
-      playsinline
-      poster="/casos-poster.jpg"
-    >
-      <source src="/videos/fondohero.webm" type="video/webm" />
-      <source src="/videos/fondohero.mp4" type="video/mp4" />
-    </video>
   </div>
 
   <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/40 to-[#fafafa]"></div>
