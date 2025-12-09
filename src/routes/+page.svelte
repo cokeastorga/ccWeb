@@ -349,10 +349,17 @@
               <p class="text-sm text-gray-600">KPIs claros antes de escribir código.</p>
             </div>
           </li>
+           <li class="flex gap-4 animated-item" use:animateOnScroll>
+            <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.check}</div>
+            <div>
+              <h3 class="font-bold text-gray-900">Sin pagos mensuales</h3>
+              <p class="text-sm text-gray-600">Solo generas un pago unico.</p>
+            </div>
+          </li>
           <li class="flex gap-4 animated-item" use:animateOnScroll>
             <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.shield}</div>
             <div>
-              <h3 class="font-bold text-gray-900">Seguridad por Diseño</h3>
+              <h3 class="font-bold text-gray-900">Entrega Rapida</h3>
               <p class="text-sm text-gray-600">Mejores prácticas desde el día 1.</p>
             </div>
           </li>
@@ -371,7 +378,7 @@
           <h3 class="text-xl font-bold text-gray-900 mb-6">Inversión Estimada</h3>
           <div class="grid gap-6 md:grid-cols-2">
             <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
-              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Landing Page</div>
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Landing Page Svelte</div>
               <div class="text-2xl font-bold text-gray-900 mb-1">$550.000 <span class="text-sm font-normal text-gray-500">CLP</span></div>
               <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
                 <li>Diseño High-End</li>
@@ -380,12 +387,31 @@
               </ul>
             </div>
             <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
-              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">MVP Aplicación</div>
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">MVP Aplicación Web Svelte</div>
               <div class="text-2xl font-bold text-gray-900 mb-1">$1.8M+ <span class="text-sm font-normal text-gray-500">CLP</span></div>
               <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
                 <li>Arquitectura Escalable</li>
                 <li>Panel Admin</li>
                 <li>Auth & BD</li>
+              </ul>
+            </div>
+             <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Landing wordpress</div>
+              <div class="text-2xl font-bold text-gray-900 mb-1">$250.000 <span class="text-sm font-normal text-gray-500">CLP</span></div>
+              <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
+                <li>3 Paginas</li>
+                <li>Dominio y Hosting 1 año</li>
+                <li>SEO basico</li>
+              </ul>
+            </div>
+             <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">MVP E-commerce Wordpress</div>
+              <div class="text-2xl font-bold text-gray-900 mb-1">$350.000+ <span class="text-sm font-normal text-gray-500">CLP</span></div>
+              <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
+                <li>3 Paginas</li>
+                <li>25 productos</li>
+                <li>Integracion con pagos</li>
+                <li>Dominio y Hosting</li>
               </ul>
             </div>
           </div>
