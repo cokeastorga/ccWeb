@@ -14,20 +14,6 @@
   let showBackToTop = false;
   let reducedMotion = false;
 
-  // —— THEME & MOBILE ——
-  let theme: 'light' | 'dark' = 'dark';
-  let mobileOpen = false;
-
-  function applyTheme(t: 'light' | 'dark') {
-    theme = t;
-    const root = document.documentElement;
-    root.classList.toggle('light', t === 'light');
-    root.classList.toggle('dark', t === 'dark');
-  }
-  function toggleTheme() { applyTheme(theme === 'dark' ? 'light' : 'dark'); }
-  function openMobile() { mobileOpen = true; }
-  function closeMobile() { mobileOpen = false; }
-
   // —— HELPERS ——
   async function enviar(e: Event) {
     e.preventDefault();
@@ -70,11 +56,7 @@
   }
   function scrollToTop() { if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  function onKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && mobileOpen) closeMobile();
-  }
-
-  // —— ICONS ——
+  // —— ICONS (Ajustados para tema claro) ——
   const icons = {
     code: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5 0-4.5 16.5' /></svg>`,
     shield: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' /></svg>`,
@@ -86,253 +68,179 @@
     arrowUp: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' class='w-5 h-5'><path stroke-linecap='round' stroke-linejoin='round' d='M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75' /></svg>`
   };
 
-  // —— ON MOUNT ——
   onMount(() => {
     if (typeof window !== 'undefined') {
-      // Reduced motion
       const m = window.matchMedia('(prefers-reduced-motion: reduce)');
       reducedMotion = m.matches;
-      const onChange = () => (reducedMotion = m.matches);
-      m.addEventListener?.('change', onChange);
-
-      // Cookie bar
+      
       if (!localStorage.getItem('cookie_ok')) {
         const el = document.getElementById('cookiebar');
         if (el) el.hidden = false;
       }
-
-      // Theme init
-      const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
-      if (saved) applyTheme(saved);
-      else if (window.matchMedia('(prefers-color-scheme: light)').matches) applyTheme('light');
     }
-
-    // Scroll listener
     const onScroll = () => handleScroll();
     window.addEventListener('scroll', onScroll);
-    window.addEventListener('keydown', onKeydown);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('keydown', onKeydown);
-    };
+    return () => { window.removeEventListener('scroll', onScroll); };
   });
-
-  // persist theme
-  $: if (typeof window !== 'undefined') localStorage.setItem('theme', theme);
 </script>
 
 <svelte:window on:scroll={handleScroll} />
 <svelte:head>
-  <title>CC Solutions — Desarrollo, Ciberseguridad y Automatización</title>
-  <meta name="description" content="Desarrollo web con SvelteKit, arquitectura serverless, ciberseguridad aplicada e IA para automatizar y escalar tu negocio." />
-  <meta property="og:title" content="CC Solutions — Desarrollo, Ciberseguridad y Automatización" />
-  <meta property="og:description" content="Software seguro y automatizado que vende y escala." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={siteUrl} />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <link rel="canonical" href={siteUrl} />
-
-  <!-- Organization -->
-  <script type="application/ld+json">{JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'CC Solutions',
-    url: siteUrl,
-    sameAs: [linkedin],
-    contactPoint: [{ '@type': 'ContactPoint', email: emailTo, contactType: 'sales', areaServed: 'CL', availableLanguage: ['es','en'] }]
-  })}</script>
-
-  <!-- Professional Service -->
-  <script type="application/ld+json">{JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    name: 'CC Solutions',
-    url: siteUrl,
-    areaServed: 'CL',
-    serviceType: ['Desarrollo Web','Ciberseguridad','Automatización con IA','Cloud/DevOps'],
-    sameAs: [linkedin]
-  })}</script>
-
-  <!-- FAQPage -->
-  <script type="application/ld+json">{JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      { '@type': 'Question', name: '¿Trabajas con facturación?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Emisión de boleta o factura electrónica según corresponda.' } },
-      { '@type': 'Question', name: '¿Plazos típicos?', acceptedAnswer: { '@type': 'Answer', text: 'Desde 1 semana para una landing hasta 6–8 semanas para un MVP.' } },
-      { '@type': 'Question', name: '¿Tomas proyectos en curso?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Hago una auditoría inicial y propongo un plan de rescate por etapas.' } }
-    ]
-  })}</script>
-
-  <!-- Breadcrumbs -->
-  <script type="application/ld+json">{JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Inicio', item: siteUrl + '#inicio' },
-      { '@type': 'ListItem', position: 2, name: 'Servicios', item: siteUrl + '#servicios' },
-      { '@type': 'ListItem', position: 3, name: 'Contacto', item: siteUrl + '#contacto' }
-    ]
-  })}</script>
-
-  <!-- Analytics (activa el que uses) -->
-  <!-- <script defer data-domain="ccsolution.cl" src="https://plausible.io/js/script.js"></script> -->
+  <title>CC Solutions — Ingeniería de Software</title>
+  <meta name="description" content="Desarrollo web con SvelteKit, arquitectura serverless y ciberseguridad." />
 </svelte:head>
 
 <style>
-  :global(html){ scroll-behavior:smooth; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif; }
-  :global(body){ background-color:#0f172a; color:#e2e8f0; }
+  :global(html) { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+  
+  /* —— TEMA CLARO MODERNO —— */
+  :global(body) { 
+    background-color: #fafafa; 
+    color: #18181b; 
+    overflow-x: hidden;
+  }
 
-  /* Animations */
+  /* —— UTILITIES —— */
+  .glow-orb {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+    z-index: -5;
+  }
+
+  :global(.card-glass) {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+  }
+  :global(.card-glass:hover) {
+    background: #ffffff;
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
+  }
+
   :global(.animated-item){ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
   :global(.is-visible){ opacity:1; transform:translateY(0); }
-  @media (prefers-reduced-motion: reduce){ :global(.animated-item){ transition:none; opacity:1; transform:none; } }
 
-  /* Cards */
-  :global(.card-hover){ transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease; border:1px solid #1e293b; }
-  :global(.card-hover:hover){ transform:translateY(-6px); border-color:#3b82f6; box-shadow:0 18px 24px -12px rgba(59,130,246,.25); }
+  .back-to-top { position:fixed; right:1rem; bottom:1rem; opacity:0; transition:all .3s ease; z-index:50; pointer-events: none; }
+  .back-to-top.is-visible { opacity:1; transform:translateY(0); pointer-events: auto; }
+  
+  :global(.btn) { padding:.75rem 1rem; border-radius:.75rem; font-weight:600; transition:all .2s ease; }
+  :global(.btn-primary) { 
+    background: #18181b; 
+    color: white; 
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  :global(.btn-primary:hover) { 
+    background: #27272a; 
+    transform: translateY(-1px); 
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); 
+  }
 
-  /* Back-to-top */
-  .back-to-top{ position:fixed; right:1rem; bottom:1rem; opacity:0; pointer-events:none; transform:translateY(10px); transition:all .2s ease; z-index:50; }
-  .back-to-top.is-visible{ opacity:1; pointer-events:auto; transform:translateY(0); }
-
-  /* Utilities */
-  :global(.btn){ padding:.75rem 1rem; border-radius:.75rem; font-weight:600; transition:transform .15s ease, box-shadow .2s ease, background-color .2s ease; }
-  :global(.btn-primary){ background:#2563eb; color:white; box-shadow:0 4px 14px rgba(37,99,235,.3); }
-  :global(.btn-primary:hover){ background:#1d4ed8; transform:translateY(-1px); box-shadow:0 8px 20px rgba(37,99,235,.45); }
-  :global(.btn-outline){ border:1px solid #334155; color:#e2e8f0; }
-  :global(.btn-outline:hover){ background:#1e293b; border-color:#3b82f6; color:white; }
-  :global(.input){ width:100%; border-radius:.75rem; background:#0b1220; border:1px solid #334155; padding:.75rem 1rem; color:#e2e8f0; }
-  :global(.input:focus){ outline:none; border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.25); }
-
-  /* Header */
-  .nav{ position:sticky; top:0; backdrop-filter:blur(10px); background:rgba(2,6,23,.6); border-bottom:1px solid rgba(30,41,59,.6); z-index:40; }
-
-  /* Mobile menu */
-  .mobile-nav{ position:fixed; inset:0; background:rgba(2,6,23,.65); backdrop-filter:blur(6px); display:none; }
-  .mobile-nav.open{ display:block; }
-
-  /* Cookie bar */
-  .cookiebar{ position:fixed; left:1rem; right:1rem; bottom:1rem; z-index:60; }
-
-  /* Theme toggle */
-  :global(.theme-toggle){ display:inline-flex; align-items:center; gap:.5rem; padding:.5rem .75rem; border-radius:.5rem; border:1px solid #334155; color:#e2e8f0; }
-  :global(.theme-toggle:hover){ background:#1e293b; }
+  :global(.input) { 
+    width:100%; border-radius:.75rem; 
+    background: #ffffff; 
+    border:1px solid #e4e4e7; 
+    padding:.75rem 1rem; color:#18181b; 
+  }
+  :global(.input:focus) { 
+    outline:none; border-color:#3b82f6; 
+    box-shadow:0 0 0 3px rgba(59,130,246,0.1); 
+  }
 </style>
 
-<!-- —— NAVBAR —— -->
-<header class="nav" role="banner">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <a href="#inicio" class="font-semibold tracking-tight text-slate-100" aria-label="Ir a inicio">
-      CC <span class="text-blue-400">Solutions</span>
-    </a>
-    <nav class="hidden md:flex items-center gap-6 text-slate-300" aria-label="Navegación principal">
-      <a href="#servicios" class="hover:text-white">Servicios</a>
-      <a href="#casos" class="hover:text-white">Casos</a>
-      <a href="#proceso" class="hover:text-white">Proceso</a>
-      <a href="#faq" class="hover:text-white">FAQ</a>
-      <button class="theme-toggle" on:click={toggleTheme} aria-label="Cambiar tema">🌓 <span class="hidden sm:inline">Tema</span></button>
-      <a href="#contacto" class="btn btn-primary">Agenda</a>
-    </nav>
-    <button class="md:hidden btn btn-outline" on:click={openMobile} aria-label="Abrir menú">☰</button>
+<section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+       style="background-image: url('/hero.png');">
   </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>
+  <div class="glow-orb z-0 opacity-50"></div>
 
-  <!-- Mobile menu overlay -->
-  <div class="mobile-nav {mobileOpen ? 'open' : ''}" role="dialog" aria-modal="true" aria-label="Menú móvil">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-      <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-6">
-        <div class="flex justify-between items-center">
-          <div class="font-semibold text-slate-100">Menú</div>
-          <button class="btn btn-outline" on:click={closeMobile} aria-label="Cerrar menú">✕</button>
-        </div>
-        <div class="mt-4 grid gap-3 text-slate-200">
-          <a href="#servicios" on:click={closeMobile} class="hover:text-white">Servicios</a>
-          <a href="#casos" on:click={closeMobile} class="hover:text-white">Casos</a>
-          <a href="#proceso" on:click={closeMobile} class="hover:text-white">Proceso</a>
-          <a href="#faq" on:click={closeMobile} class="hover:text-white">FAQ</a>
-          <button class="theme-toggle" on:click={() => { toggleTheme(); closeMobile(); }}>🌓 Tema</button>
-          <a href="#contacto" on:click={closeMobile} class="btn btn-primary">Agenda</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- —— HERO —— -->
-<section id="inicio" class="relative overflow-hidden bg-slate-950">
-  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/30 via-slate-950 to-slate-950" aria-hidden="true"></div>
-  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 min-h-[70svh] flex items-center">
-    <div class="max-w-2xl">
-      <span class="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-300 animated-item" use:animateOnScroll>
-        Disponibilidad limitada · Asesoría 1 a 1
+  <div class="mx-auto max-w-5xl px-4 text-center relative z-10">
+    <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/80 backdrop-blur px-3 py-1 text-xs text-gray-600 mb-8 animated-item" use:animateOnScroll>
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
       </span>
-      <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-slate-100 animated-item" use:animateOnScroll>
-        Transformo ideas en <span class="text-blue-400">software seguro</span> y <span class="text-blue-400">automatizado</span> que vende y escala
-      </h1>
-      <p class="mt-6 text-lg text-slate-300 animated-item" use:animateOnScroll>
-        Desarrollo web con SvelteKit, integraciones serverless (Firebase), ciberseguridad aplicada y automatización con IA. Entrego rápido, mido impacto y dejo todo documentado.
-      </p>
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 animated-item" use:animateOnScroll>
-        <a href="#contacto" class="btn btn-primary" aria-label="Agendar una llamada">Agenda una llamada</a>
-        <a href="#casos" class="btn btn-outline" aria-label="Ver casos de estudio">Ver casos</a>
-        <a href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener" class="btn btn-outline" aria-label="Hablar por WhatsApp">WhatsApp</a>
-      </div>
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 text-slate-400 animated-item" use:animateOnScroll>
-        <div class="text-sm">+2 años en desarrollo</div>
-        <div class="text-sm">Ing. Ciberseguridad · Univ. Mayor</div>
-        <div class="text-sm">Analista Programador · Duoc UC</div>
-        <div class="text-sm">Stack: SvelteKit · Firebase · GCP</div>
-        <div class="text-sm">Automatizaciones con IA y Python</div>
-        <div class="text-sm">Buenas prácticas ISO/IEC 27001</div>
-        <div class="text-sm">OWASP · CWE/CVE awareness</div>
-      </div>
+      Disponibilidad para nuevos proyectos
+    </div>
+
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8 text-gray-900 animated-item" use:animateOnScroll>
+      Software seguro que<br/>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">escala tu negocio.</span>
+    </h1>
+
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animated-item" use:animateOnScroll>
+      Ingeniería de software de alto nivel. Desarrollo SvelteKit, ciberseguridad y automatización para empresas que valoran la calidad.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animated-item" use:animateOnScroll>
+      <a href="#contacto" class="btn btn-primary">Iniciar Proyecto</a>
+      <a href="#casos" class="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors">Ver Casos de Éxito</a>
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-gray-200/60 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-bold tracking-wider text-gray-400 animated-item" use:animateOnScroll>
+      <span>SVELTEKIT</span>
+      <span>TYPESCRIPT</span>
+      <span>FIREBASE</span>
+      <span>PYTHON</span>
+      <span>GCP</span>
     </div>
   </div>
 </section>
 
-<!-- —— TRUST BAR —— -->
-<section class="py-12 bg-slate-950 border-y border-slate-800/60" aria-label="Clientes y proyectos">
+<section class="py-12 border-y border-gray-100 bg-white/50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-sm text-slate-400 mb-6 animated-item" use:animateOnScroll>Confían en mi trabajo</p>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-6 items-center justify-items-center opacity-90">
+    <p class="text-center text-xs tracking-widest uppercase text-gray-400 mb-8 font-semibold animated-item" use:animateOnScroll>Portafolio de trabajo</p>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
       {#each [
-        { href:'https://enfermeriasendo.cl', alt:'SENDO', txt:'SENDO' },
-        { href:'https://satplatform.vercel.app', alt:'SATPlatform', txt:'SATPlatform' },
-        { href:'https://deliciasporteñas.cl', alt:'Delicias Porteñas', txt:'Delicias+Porteñas' },
-        { href:'https://finderweb.vercel.app/', alt:'FinderApp', txt:'FinderApp' },
-        { href:'https://asvipchile.cl', alt:'Asvip Chile', txt:'Asvip+Chile' }
+        { href:'https://enfermeriasendo.cl', alt:'SENDO', src:'/logos/logosendo.jpg' },
+        { href:'https://satplatform.vercel.app', alt:'SATPlatform', src:'/logos/logosat.jpg' },
+        { href:'https://deliciasporteñas.cl', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg' },
+        { href:'https://finderweb.vercel.app/', alt:'FinderApp', src:'/logos/logofinder.jpg' },
+        { href:'https://asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg' }
       ] as c}
         <a href={c.href} target="_blank" rel="noopener" class="flex flex-col items-center space-y-2 group animated-item" use:animateOnScroll>
-          <img loading="lazy" src={`https://placehold.co/112x56/f1f5f9/94a3b8?text=${c.txt}`} alt={c.alt} class="h-14 w-28 object-contain rounded-2xl bg-slate-100 p-2 transition group-hover:scale-105" />
-          <span class="text-xs text-slate-400 group-hover:text-white transition-colors">{c.alt}</span>
+          <img loading="lazy" src={c.src} alt={c.alt} class="h-12 w-auto object-contain mix-blend-multiply" />
         </a>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- —— SERVICIOS —— -->
-<section id="servicios" class="py-20 lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<section id="servicios" class="relative py-20 lg:py-28 overflow-hidden">
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+       style="background-image: url('/fondo1.png');">
+  </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="max-w-3xl animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100">Servicios</h2>
-      <p class="mt-4 text-lg text-slate-300">Puedo entrar como refuerzo táctico en un sprint o liderar proyectos de punta a punta.</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Servicios de Ingeniería</h2>
+      <p class="mt-4 text-lg text-gray-600">Soluciones técnicas robustas para problemas de negocio complejos.</p>
     </div>
     <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {#each [
-        { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages, dashboards y apps en SvelteKit con arquitectura serverless (Firebase/GCP). SEO técnico y performance A/AA.', bullets:['SSR/SSG, rutas protegidas, roles y permisos','Pagos e integración con APIs (Transbank/Mercado Pago)','CI/CD y despliegue en Vercel/Cloud Run'] },
-        { icon: icons.shield, title:'Ciberseguridad Aplicada', desc:'Endurecimiento, pruebas de seguridad y buenas prácticas desde el diseño. Cumplimiento básico de marcos como ISO/IEC 27001 y NIST.', bullets:['Revisión de arquitectura, auth y reglas de Firestore','Threat modeling y checklist OWASP','Backups, logs y planes de respuesta'] },
-        { icon: icons.zap, title:'Automatización & IA', desc:'Bots y flujos con LLMs para atención, generación de contenido y tareas repetitivas. Integración con tus datos y procesos.', bullets:['Clasificación, extracción y generación de documentos','Asistentes internos (FAQ, SOP, reportes)','Evaluación de ROI y control de costos'] },
-        { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infra mínima, eficiente y observable. Automatizo despliegues y monitoreo.', bullets:['Pipelines CI/CD y ambientes','Observabilidad (logs, métricas, alertas)','Cost-control y escalabilidad'] },
-        { icon: icons.chat, title:'Consultorías Express', desc:'Sesiones de 60–90 minutos para desbloquear decisiones clave: arquitectura, seguridad, UX, costos o roadmap.', bullets:['Revisión de código y performance','Plan de acción priorizado','Resumen ejecutivo y próximos pasos'] }
+        { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG, rutas protegidas','Pasarelas de Pago','CI/CD automatizado'] },
+        { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura','Threat modeling (OWASP)','Planes de respuesta'] },
+        { icon: icons.zap, title:'Automatización & IA', desc:'Optimización de procesos con scripts y modelos de lenguaje (LLMs).', bullets:['Procesamiento de documentos','Asistentes virtuales','Análisis de datos'] },
+        { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infraestructura como código. Despliegues escalables.', bullets:['Pipelines CI/CD','Monitoreo y Logs','Optimización de costos'] },
+        { icon: icons.chat, title:'Consultoría Técnica', desc:'Asesoramiento estratégico para líderes de proyecto.', bullets:['Evaluación de arquitectura','Revisión de código','Planificación de Roadmap'] }
       ] as s}
-        <article class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 card-hover animated-item" use:animateOnScroll>
+        <article class="card-glass rounded-xl p-8 animated-item" use:animateOnScroll>
           <div class="flex items-center gap-4">
-            <div class="h-12 w-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">{@html s.icon}</div>
-            <h3 class="text-xl font-semibold text-slate-100">{s.title}</h3>
+            <div class="h-10 w-10 text-blue-600 flex items-center justify-center flex-shrink-0 bg-blue-50 rounded-lg">{@html s.icon}</div>
+            <h3 class="text-xl font-bold text-gray-900">{s.title}</h3>
           </div>
-          <p class="mt-4 text-slate-300">{s.desc}</p>
-          <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
+          <p class="mt-4 text-gray-600 text-sm leading-relaxed">{s.desc}</p>
+          <ul class="mt-6 space-y-2 text-xs text-gray-500 font-mono list-disc pl-4">
             {#each s.bullets as b}<li>{b}</li>{/each}
           </ul>
         </article>
@@ -341,27 +249,53 @@
   </div>
 </section>
 
-<!-- —— CASOS —— -->
-<section id="casos" class="py-20 lg:py-28 border-t border-slate-800/60 bg-slate-950/70">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<section id="casos" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
+  
+  <div class="absolute inset-0 -z-30 h-full w-full bg-gray-100">
+    <video
+      class="h-full w-full object-cover opacity-30 grayscale-[20%]"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/casos-poster.jpg"
+    >
+      <source src="/videos/fondohero.webm" type="video/webm" />
+      <source src="/videos/fondohero.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/40 to-[#fafafa]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="max-w-3xl animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100">Casos seleccionados</h2>
-      <p class="mt-4 text-lg text-slate-300">Resultados medibles en proyectos reales.</p>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Casos de Éxito</h2>
+      <p class="mt-4 text-lg text-gray-600">Impacto real en negocios reales.</p>
     </div>
+    
     <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {#each [
-        { title:'SENDO · Plataforma de salud domiciliaria', p:'SvelteKit + Firebase + Auth. Mejoras UX y carga 45% más rápida. Roles, turnos y panel de gestión.', bullets:['Core Web Vitals en verde','Integración de correo y notificaciones'] },
-        { title:'SATPlatform · Generación de preguntas con IA', p:'Motor de preguntas tipo SAT con JSON estandarizado y módulos adaptativos.', bullets:['Explicaciones automáticas','Panel de resultados y exportables'] },
-        { title:'FinderApp · Objetos perdidos con QR', p:'Flujo de 3 pasos, almacenamiento con ubicación y generación de códigos QR.', bullets:['Reglas de seguridad en Firestore','Panel con filtros y estado'] }
+        { title:'SENDO · Salud', p:'Plataforma de gestión. Reducción del 40% en tiempos de coordinación.', bullets:['SvelteKit + Firebase','Panel admin en tiempo real'], src:'/logos/logosendo.jpg' },
+        { title:'Delicias Porteñas', p:'E-commerce moderno y autogestionable para cadena de panaderías.', bullets:['Generación con IA','Pasarela de Pagos', 'Chat-Bot'], src:'/logos/logodelicias.jpg' },
+        { title:'FinderApp · Logística', p:'Sistema de recuperación de activos mediante QR únicos.', bullets:['Seguridad Firestore','Interfaz móvil'], src:'/logos/logofinder.jpg' }
       ] as c}
-        <article class="group rounded-2xl border border-slate-800 overflow-hidden bg-slate-900/50 card-hover animated-item" use:animateOnScroll>
-          <div class="h-40 bg-slate-800"></div>
-          <div class="p-6">
-            <h3 class="font-semibold text-slate-100">{c.title}</h3>
-            <p class="mt-2 text-sm text-slate-300">{c.p}</p>
-            <ul class="mt-3 text-xs text-slate-400 list-disc pl-5 space-y-1">
-              {#each c.bullets as b}<li>{b}</li>{/each}
-            </ul>
+        <article class="card-glass rounded-xl overflow-hidden group animated-item" use:animateOnScroll>
+          <div class="h-48 bg-gray-100 border-b border-gray-200 relative group-hover:bg-gray-200 transition-colors flex items-center justify-center p-8">
+            <img 
+              src={c.src} 
+              alt={c.title} 
+              class="w-full h-full object-contain mix-blend-multiply opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+            />
+          </div>
+          
+          <div class="p-8">
+            <h3 class="font-bold text-gray-900 text-lg">{c.title}</h3>
+            <p class="mt-2 text-sm text-gray-600">{c.p}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {#each c.bullets as b}
+                <span class="px-2 py-1 rounded border border-gray-200 bg-gray-50 text-[10px] uppercase tracking-wider text-gray-500 font-medium">{b}</span>
+              {/each}
+            </div>
           </div>
         </article>
       {/each}
@@ -369,241 +303,249 @@
   </div>
 </section>
 
-<!-- —— DIFERENCIALES + PAQUETES —— -->
-<section class="py-20 lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-10 xl:gap-16 items-start">
-      <div>
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100 animated-item" use:animateOnScroll>¿Por qué trabajar conmigo?</h2>
-        <p class="mt-4 text-lg text-slate-300 animated-item" use:animateOnScroll>No solo código: visión de negocio, seguridad desde el día 1 y obsesión por el detalle.</p>
-        <ul class="mt-8 space-y-6">
+<section class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+       style="background-image: url('/fondo3.png');">
+  </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div class="space-y-8">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 animated-item" use:animateOnScroll>Filosofía de Trabajo</h2>
+          <p class="mt-4 text-lg text-gray-600 animated-item" use:animateOnScroll>Me integro como un socio estratégico. Priorizo la seguridad, la escalabilidad y la transparencia.</p>
+        </div>
+        
+        <ul class="space-y-6">
           <li class="flex gap-4 animated-item" use:animateOnScroll>
-            <div class="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">{@html icons.check}</div>
+            <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.check}</div>
             <div>
-              <h3 class="font-semibold text-slate-100">Entrega rápida y medible</h3>
-              <p class="text-slate-300">Cierres quincenales con demo, métricas y próximos pasos.</p>
+              <h3 class="font-bold text-gray-900">Resultados Medibles</h3>
+              <p class="text-sm text-gray-600">KPIs claros antes de escribir código.</p>
             </div>
           </li>
           <li class="flex gap-4 animated-item" use:animateOnScroll>
-            <div class="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">{@html icons.shield}</div>
+            <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.shield}</div>
             <div>
-              <h3 class="font-semibold text-slate-100">Seguridad práctica</h3>
-              <p class="text-slate-300">Revisiones OWASP, mínimos privilegios y planes de contingencia.</p>
+              <h3 class="font-bold text-gray-900">Seguridad por Diseño</h3>
+              <p class="text-sm text-gray-600">Mejores prácticas desde el día 1.</p>
             </div>
           </li>
           <li class="flex gap-4 animated-item" use:animateOnScroll>
-            <div class="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">{@html icons.file}</div>
+            <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.file}</div>
             <div>
-              <h3 class="font-semibold text-slate-100">Documentación clara</h3>
-              <p class="text-slate-300">Readme, diagramas y SOP de operación para no depender de mí.</p>
+              <h3 class="font-bold text-gray-900">Propiedad Total</h3>
+              <p class="text-sm text-gray-600">Código y accesos 100% tuyos al finalizar.</p>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="rounded-3xl border border-slate-800 bg-slate-900/50 p-8 animated-item" use:animateOnScroll>
-        <h3 class="text-xl font-semibold text-slate-100">Paquetes sugeridos</h3>
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="rounded-2xl bg-slate-800/70 border border-slate-700 p-6">
-            <div class="text-sm text-slate-400">Desde</div>
-            <div class="text-3xl font-bold text-slate-100">$550.000</div>
-            <div class="mt-2 font-medium text-slate-100">Landing Pro</div>
-            <ul class="mt-3 text-sm text-slate-300 list-disc pl-5 space-y-1">
-              <li>3 páginas, menú y SEO</li>
-              <li>Integración con RRSS</li>
-              <li>100% responsive</li>
-              <li>Hosting + dominio x 1 año</li>
-              <li>Correo institucional</li>
-              <li>Entrega en 15–21 días</li>
-            </ul>
+      <div class="card-glass rounded-2xl p-1 animated-item" use:animateOnScroll>
+        <div class="bg-gray-50/80 backdrop-blur-sm rounded-xl p-8 border border-gray-100">
+          <h3 class="text-xl font-bold text-gray-900 mb-6">Inversión Estimada</h3>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">Landing Page</div>
+              <div class="text-2xl font-bold text-gray-900 mb-1">$550.000 <span class="text-sm font-normal text-gray-500">CLP</span></div>
+              <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
+                <li>Diseño High-End</li>
+                <li>Optimización SEO</li>
+                <li>Hosting (1 año)</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-6 hover:border-blue-300 transition-colors shadow-sm">
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2 font-semibold">MVP Aplicación</div>
+              <div class="text-2xl font-bold text-gray-900 mb-1">$1.8M+ <span class="text-sm font-normal text-gray-500">CLP</span></div>
+              <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc list-inside">
+                <li>Arquitectura Escalable</li>
+                <li>Panel Admin</li>
+                <li>Auth & BD</li>
+              </ul>
+            </div>
           </div>
-          <div class="rounded-2xl bg-slate-800/70 border border-slate-700 p-6">
-            <div class="text-sm text-slate-400">Desde</div>
-            <div class="text-3xl font-bold text-slate-100">$1.800.000</div>
-            <div class="mt-2 font-medium text-slate-100">MVP App móvil o web</div>
-            <ul class="mt-3 text-sm text-slate-300 list-disc pl-5 space-y-1">
-              <li>Auth, roles y panel</li>
-              <li>Diseño seguro y moderno</li>
-              <li>5 páginas</li>
-              <li>Panel de usuario</li>
-              <li>Solución cloud</li>
-              <li>APIs y endpoints</li>
-              <li>Serverless o SSR</li>
-              <li>CI/CD y monitoreo</li>
-            </ul>
-          </div>
+          <p class="mt-6 text-xs text-center text-gray-500">* Valores referenciales.</p>
         </div>
-        <p class="mt-4 text-xs text-slate-400">* Precios de referencia en CLP, varían según alcance.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- —— PROCESO —— -->
-<section id="proceso" class="py-20 lg:py-28 border-t border-slate-800/60 bg-slate-950/70">
+<section id="proceso" class="relative py-20 lg:py-28 border-t border-gray-200">
+   <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+       style="background-image: url('/fondo4.png');">
+  </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100">Proceso simple, sin sorpresas</h2>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Metodología</h2>
+      <p class="mt-4 text-lg text-gray-600">Un proceso estructurado para garantizar calidad.</p>
     </div>
     <div class="mt-12 grid gap-6 md:grid-cols-4">
       {#each [
-        {n:'01', t:'Descubrimiento', d:'Entiendo objetivos, restricciones y métricas de éxito.'},
-        {n:'02', t:'Propuesta', d:'Alcance claro, entregables, hitos y presupuesto.'},
-        {n:'03', t:'Implementación', d:'Ejecución iterativa con demos y feedback continuo.'},
-        {n:'04', t:'Entrega & Soporte', d:'Documentación, traspaso y soporte opcional.'}
+        {n:'01', t:'Descubrimiento', d:'Análisis de requerimientos y viabilidad técnica.'},
+        {n:'02', t:'Estrategia', d:'Definición de arquitectura, stack tecnológico y cronograma.'},
+        {n:'03', t:'Desarrollo', d:'Sprints iterativos con demos quincenales.'},
+        {n:'04', t:'Entrega', d:'Despliegue a producción, capacitación y entrega de documentación.'}
       ] as step}
-        <div class="rounded-2xl bg-slate-900/50 border border-slate-800 p-6 card-hover animated-item" use:animateOnScroll>
-          <div class="text-4xl font-extrabold text-blue-400">{step.n}</div>
-          <h3 class="mt-2 font-semibold text-slate-100">{step.t}</h3>
-          <p class="text-sm text-slate-300">{step.d}</p>
+        <div class="card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
+          <div class="text-4xl font-bold text-gray-200 mb-4">{step.n}</div>
+          <h3 class="font-bold text-gray-900 mb-2">{step.t}</h3>
+          <p class="text-sm text-gray-600">{step.d}</p>
         </div>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- —— TESTIMONIOS —— -->
-<section id="testimonios" class="py-20 lg:py-28">
+<section id="testimonios" class="py-20 lg:py-28 border-t border-gray-200">
+  
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100">Lo que dicen mis clientes</h2>
-      <p class="mt-4 text-lg text-slate-300">Testimonios reales.</p>
-    </div>
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
+    
+    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-12 animated-item" use:animateOnScroll>Testimonios</h2>
+    <div class="grid gap-6 md:grid-cols-3">
       {#each [
-        {q:'“Pasamos de planillas a una app usable. El onboarding fue impecable.”', a:'EnfermeriaSENDO.cl — Santiago, Región Metropolitana'},
-        {q:'“Nos dio una identidad en la web con un excelente producto, aumentando nuestra visibilidad y clientes.”', a:'DeliciasPorteñas.cl — Valdivia, Región de Los Ríos'},
-        {q:'“Implementó sistema de cámaras y antivirus, ahora dormimos más tranquilos.”', a:'Erika Cabalín — Particular / Iquique, Región de Tarapacá'},
-        {q:'“Nos otorgó una solución cloud y plataforma web completa y profesional.”', a:'AsvipChile.cl — Santiago, Región Metropolitana'},
-        {q:'“Trabajo serio y rápido.”', a:'AstorgayAsociados.com — Yumbel, Región del Biobío'},
-        {q:'“Solución rápida y económica, ajustada a nuestras necesidades. Felices.”', a:'ContratistaMCR.cl — Colina, Región Metropolitana'}
+        {q:'“Pasamos de planillas a una app usable. El onboarding fue impecable.”', a:'EnfermeriaSENDO.cl'},
+        {q:'“Nos dio una identidad en la web con un excelente producto.”', a:'DeliciasPorteñas.cl'},
+        {q:'“Implementó sistema de cámaras y antivirus, ahora dormimos tranquilos.”', a:'Cliente Particular'},
+        {q:'“Nos otorgó una solución cloud completa y profesional.”', a:'AsvipChile.cl'},
+        {q:'“Trabajo serio, rápido y con excelente disposición.”', a:'AstorgayAsociados.com'},
+        {q:'“Solución rápida y económica. Felices.”', a:'ContratistaMCR.cl'}
       ] as t}
-        <blockquote class="rounded-2xl bg-slate-900/50 border border-slate-800 p-6 card-hover animated-item" use:animateOnScroll>
-          <p class="text-slate-100">{t.q}</p>
-          <footer class="mt-4 text-sm text-slate-400">— {t.a}</footer>
+        <blockquote class="card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
+          <p class="text-gray-700 italic mb-4 text-sm font-medium">"{t.q}"</p>
+          <footer class="text-xs text-gray-500 font-bold uppercase tracking-wide">— {t.a}</footer>
         </blockquote>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- —— FAQ —— -->
-<section id="faq" class="py-20 lg:py-28 border-t border-slate-800/60 bg-slate-950/70">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100 animated-item" use:animateOnScroll>Preguntas frecuentes</h2>
-    <div class="mt-8 space-y-4 max-w-3xl">
+<section id="faq" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+       style="background-image: url('/fondo2.png');">
+  </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/60 to-[#fafafa]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8 animated-item" use:animateOnScroll>Preguntas Frecuentes</h2>
+    <div class="max-w-3xl space-y-4">
       {#each [
-        {q:'¿Trabajas con facturación?', a:'Sí. Emisión de boleta o factura electrónica según corresponda.'},
-        {q:'¿Plazos típicos?', a:'Desde 1 semana para una landing hasta 6–8 semanas para un MVP.'},
-        {q:'¿Tomas proyectos en curso?', a:'Sí. Hago una auditoría inicial y propongo un plan de rescate por etapas.'}
+        {q:'¿Trabajas con facturación?', a:'Sí. Emisión de boleta o factura electrónica.'},
+        {q:'¿Cuáles son los plazos típicos?', a:'Desde 1 semana para una landing page hasta 6–8 semanas para un MVP funcional.'},
+        {q:'¿Tomas proyectos en curso?', a:'Sí. Realizo una auditoría inicial para evaluar el estado del código.'}
       ] as f}
-        <details class="group rounded-2xl border border-slate-800 bg-slate-900/50 p-6 card-hover animated-item" use:animateOnScroll>
-          <summary class="cursor-pointer font-medium text-slate-100 flex justify-between items-center list-none">
+        <details class="group card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
+          <summary class="cursor-pointer font-bold text-gray-900 flex justify-between items-center list-none">
             {f.q}
-            <span class="text-slate-400 group-open:rotate-180 group-open:text-blue-400 transition-transform duration-200" aria-hidden="true">⌄</span>
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">↓</span>
           </summary>
-          <p class="mt-3 text-slate-300">{f.a}</p>
+          <p class="mt-4 text-gray-600 text-sm leading-relaxed">{f.a}</p>
         </details>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- —— CONTACTO —— -->
-<section id="contacto" class="py-20 lg:py-28">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-10 xl:gap-16">
+<section id="contacto" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-100 grayscale-[20%]"
+       style="background-image: url('/fondo5.png');">
+  </div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-16">
       <div class="animated-item" use:animateOnScroll>
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-100">Conversemos</h2>
-        <p class="mt-4 text-lg text-slate-300">Cuéntame en una frase qué necesitas y en qué plazo. Respondo en 24–48 h.</p>
-        <div class="mt-6 space-y-3 text-slate-300">
-          <div>📍 Chile (remoto)</div>
-          <div>✉️ Correo <a class="underline decoration-blue-400/30 hover:decoration-blue-400/70 text-blue-400 hover:text-blue-300 transition-colors" href={`mailto:${emailTo}`}>{emailTo}</a></div>
-          <div>🔗 LinkedIn <a class="underline decoration-blue-400/30 hover:decoration-blue-400/70 text-blue-400 hover:text-blue-300 transition-colors" href={linkedin} target="_blank" rel="noopener">/in/cokeastorga</a></div>
-          <div>💬 WhatsApp <a class="underline decoration-blue-400/30 hover:decoration-blue-400/70 text-blue-400 hover:text-blue-300 transition-colors" href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener">{whatsapp}</a></div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Hablemos de tu Proyecto</h2>
+        <p class="mt-4 text-lg text-gray-600">Si buscas ingeniería de calidad y visión de largo plazo, estás en el lugar correcto.</p>
+        
+        <div class="mt-8 space-y-4 text-gray-600 font-medium">
+          <div class="flex items-center gap-3">
+            <span>✉️</span> 
+            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`mailto:${emailTo}`}>{emailTo}</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <span>🔗</span> 
+            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={linkedin} target="_blank" rel="noopener">/in/cokeastorga</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <span>💬</span> 
+            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener">WhatsApp Directo</a>
+          </div>
         </div>
       </div>
 
-      <form class="rounded-3xl border border-slate-800 bg-slate-900/50 p-8 space-y-4 animated-item" use:animateOnScroll
+      <form class="card-glass rounded-2xl p-8 space-y-6 animated-item" use:animateOnScroll
             action={`https://formsubmit.co/${emailTo}`}
             method="POST"
             on:submit={enviar}
             aria-label="Formulario de contacto">
+        
         <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_subject" value="Nueva consulta desde el sitio" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_autoresponse" value="¡Gracias! Recibí tu mensaje y te respondo en breve." />
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+        <input type="hidden" name="_next" value={`${siteUrl}/gracias`} />
 
         <div>
-          <label class="block text-sm mb-1.5 font-medium text-slate-200" for="nombre">Nombre</label>
+          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="nombre">Nombre Completo</label>
           <input id="nombre" name="name" type="text" required class="input" autocomplete="name" />
         </div>
-        <div class="grid md:grid-cols-2 gap-4">
+        
+        <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm mb-1.5 font-medium text-slate-200" for="email">Email</label>
+            <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="email">Correo</label>
             <input id="email" name="email" type="email" required class="input" autocomplete="email" />
           </div>
           <div>
-            <label class="block text-sm mb-1.5 font-medium text-slate-200" for="telefono">Teléfono <span class="text-slate-400">(Opcional)</span></label>
+            <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="telefono">Teléfono</label>
             <input id="telefono" name="telefono" type="tel" class="input" autocomplete="tel" inputmode="tel" />
           </div>
         </div>
+        
         <div>
-          <label class="block text-sm mb-1.5 font-medium text-slate-200" for="servicio">Servicio de interés</label>
+          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="servicio">Interés</label>
           <select id="servicio" name="servicio" class="input">
             <option>Desarrollo Web</option>
             <option>Ciberseguridad</option>
-            <option>Automatización / IA</option>
+            <option>Automatización</option>
             <option>Cloud / DevOps</option>
-            <option>Consultoría Express</option>
+            <option>Consultoría</option>
           </select>
         </div>
+        
         <div>
-          <label class="block text-sm mb-1.5 font-medium text-slate-200" for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="message" rows={5} required class="input" placeholder="Cuéntame brevemente tu idea, plazos y presupuesto si lo tienes."></textarea>
+          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="message" rows={4} required class="input" placeholder="Cuéntame brevemente tu idea."></textarea>
         </div>
+        
         {#if formStatus === 'error'}
-          <div class="rounded-md bg-red-500/10 p-3 text-sm text-red-400" role="alert">{formMessage}</div>
+          <div class="rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-600 text-center">{formMessage}</div>
         {/if}
-        <button type="submit" class="btn btn-primary w-full" disabled={formStatus === 'submitting'}>
-          {#if formStatus === 'submitting'} Enviando... {:else} Enviar consulta {/if}
+        
+        <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest" disabled={formStatus === 'submitting'}>
+          {#if formStatus === 'submitting'} Procesando... {:else} Enviar Solicitud {/if}
         </button>
-        <p class="text-xs text-slate-400 text-center">Al enviar aceptas recibir una respuesta por email.</p>
       </form>
     </div>
   </div>
 </section>
 
-<!-- Cookie consent (simple) -->
 <div class="cookiebar" id="cookiebar" hidden>
   <div class="mx-auto max-w-7xl">
-    <div class="bg-slate-900/95 border border-slate-700 rounded-2xl p-4 flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
-      <p class="text-sm text-slate-300">Usamos cookies básicas para métricas anónimas y mejorar tu experiencia.</p>
-      <div class="flex gap-2">
-        <button class="btn btn-outline" on:click={() => { localStorage.setItem('cookie_ok','1'); (document.getElementById('cookiebar') as HTMLElement).hidden = true; }}>Aceptar</button>
-        <a href="/privacidad" class="btn btn-outline">Ver detalles</a>
+    <div class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-center justify-between shadow-2xl">
+      <p class="text-sm text-gray-600">Este sitio utiliza cookies para métricas anónimas.</p>
+      <div class="flex gap-3">
+        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-gray-900 text-white" on:click={() => { localStorage.setItem('cookie_ok','1'); (document.getElementById('cookiebar') as HTMLElement).hidden = true; }}>Aceptar</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Floating WhatsApp CTA -->
-<a href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener" aria-label="Abrir WhatsApp"
-   class="fixed bottom-20 right-4 md:right-6 p-3 rounded-full bg-green-500 hover:bg-green-400 text-white shadow-lg z-40">💬</a>
+<a href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener" aria-label="WhatsApp"
+   class="fixed bottom-16 right-3 md:right-3 p-4 rounded-full bg-green-500 text-white shadow-xl z-40 hover:scale-110 transition-transform">
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
 
-<!-- —— BACK TO TOP —— -->
-<button on:click={scrollToTop} class="back-to-top bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg {showBackToTop ? 'is-visible' : ''}" aria-label="Volver arriba">{@html icons.arrowUp}</button>
-
-<!-- —— CTA FINAL —— -->
-<section class="py-20">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="rounded-3xl bg-gradient-to-br from-blue-700 to-blue-900 p-10 text-center animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white">¿Listo para despegar tu proyecto?</h2>
-      <p class="mt-3 text-blue-100/90 max-w-xl mx-auto">Agenda una llamada de 20 minutos para ver si encajamos.</p>
-      <a href="#contacto" class="mt-6 inline-block btn bg-white text-slate-900 font-semibold hover:bg-slate-200">Agendar ahora</a>
-    </div>
-  </div>
-</section>
-
-
+<button on:click={scrollToTop} class="back-to-top bg-black text-white p-3 rounded-full shadow-lg {showBackToTop ? 'is-visible' : ''}">
+  {@html icons.arrowUp}
+</button>

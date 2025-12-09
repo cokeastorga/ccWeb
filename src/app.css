@@ -2,5 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-.glass { backdrop-filter: saturate(180%) blur(14px); background: rgba(255,255,255,0.08); }
-.shadow-soft { box-shadow: 0 10px 30px rgba(2,6,23,.1); }
+:root {
+  color-scheme: light; /* Fundamental para que el navegador sepa que es claro */
+}
+
+body {
+  /* Fondo casi blanco (#fafafa) y Texto casi negro (#09090b) */
+  @apply bg-dark-950 text-dark-100 antialiased selection:bg-brand-500/20 selection:text-brand-900;
+}
+
+/* Efecto Vidrio Limpio (Frosty Glass) */
+.glass {
+  @apply bg-white/80 backdrop-blur-lg border border-gray-200 shadow-sm;
+}
+
+/* Tarjetas Minimalistas */
+.card-clean {
+  @apply bg-white border border-gray-200 rounded-2xl transition-all duration-300;
+}
+.card-clean:hover {
+  @apply border-brand-300 shadow-xl shadow-brand-500/5 -translate-y-1;
+}
+
+/* Texto con Gradiente Sutil */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500;
+}
+
+/* Utilidades de Animación */
+.animated-item { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .animated-item { transition: none; opacity: 1; transform: none; } }
