@@ -52,7 +52,10 @@
   </main>
 
   <footer class="py-12 border-t border-gray-200 bg-white/50 backdrop-blur-sm mt-20">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-500">
+    <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-10 grayscale-[20%]"
+       style="background-image: url('/fondo1.png');">
+  </div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-800">
       <p>© {year} Jorge Astorga — CC Solutions.</p>
       <div class="flex gap-6">
         <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos</a>

@@ -1,6 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
+  import TiltCard from '$lib/components/TiltCard.svelte';
+  import SpotlightCard from '$lib/components/SpotlightCard.svelte';
+  
+  // IMPORTANTE: Asegúrate de que esta ruta sea correcta según donde guardaste el componente
+  import ServiceCard from '$lib/components/ServiceCard.svelte';
 
   // —— CONFIG ——
   const emailTo = 'cokeastorgac@gmail.com';
@@ -21,7 +26,6 @@
     if (formStatus === 'submitting') return;
     formStatus = 'submitting';
     formMessage = '';
-
     try {
       const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
       if (res.ok) goto('/gracias');
@@ -54,7 +58,8 @@
   function handleScroll() {
     if (typeof window !== 'undefined') showBackToTop = window.scrollY > 400;
   }
-  function scrollToTop() { if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  function scrollToTop() { if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   // —— ICONS (Ajustados para tema claro) ——
   const icons = {
@@ -68,6 +73,15 @@
     arrowUp: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' class='w-5 h-5'><path stroke-linecap='round' stroke-linejoin='round' d='M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75' /></svg>`
   };
 
+  // —— DATOS DE SERVICIOS (Extraídos para usarlos con el componente) ——
+  const servicesData = [
+    { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG, rutas protegidas','Pasarelas de Pago','CI/CD automatizado'] },
+    { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura','Threat modeling (OWASP)','Planes de respuesta'] },
+    { icon: icons.zap, title:'Automatización & IA', desc:'Optimización de procesos con scripts y modelos de lenguaje (LLMs).', bullets:['Procesamiento de documentos','Asistentes virtuales','Análisis de datos'] },
+    { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infraestructura como código. Despliegues escalables.', bullets:['Pipelines CI/CD','Monitoreo y Logs','Optimización de costos'] },
+    { icon: icons.chat, title:'Consultoría Técnica', desc:'Asesoramiento estratégico para líderes de proyecto.', bullets:['Evaluación de arquitectura','Revisión de código','Planificación de Roadmap'] }
+  ];
+
   onMount(() => {
     if (typeof window !== 'undefined') {
       const m = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -80,7 +94,8 @@
     }
     const onScroll = () => handleScroll();
     window.addEventListener('scroll', onScroll);
-    return () => { window.removeEventListener('scroll', onScroll); };
+    return () => { window.removeEventListener('scroll', onScroll); 
+    };
   });
 </script>
 
@@ -95,7 +110,7 @@
   
   /* —— TEMA CLARO MODERNO —— */
   :global(body) { 
-    background-color: #fafafa; 
+    background-color: #fafafa;
     color: #18181b; 
     overflow-x: hidden;
   }
@@ -113,6 +128,8 @@
     z-index: -5;
   }
 
+  /* Mantenemos card-glass global por si se usa en otros lados, 
+     pero ServiceCard.svelte tiene sus propias clases también */
   :global(.card-glass) {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
@@ -136,29 +153,29 @@
   :global(.btn) { padding:.75rem 1rem; border-radius:.75rem; font-weight:600; transition:all .2s ease; }
   :global(.btn-primary) { 
     background: #18181b; 
-    color: white; 
+    color: white;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
   }
   :global(.btn-primary:hover) { 
     background: #27272a; 
-    transform: translateY(-1px); 
+    transform: translateY(-1px);
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); 
   }
 
   :global(.input) { 
     width:100%; border-radius:.75rem; 
-    background: #ffffff; 
+    background: #ffffff;
     border:1px solid #e4e4e7; 
     padding:.75rem 1rem; color:#18181b; 
   }
   :global(.input:focus) { 
-    outline:none; border-color:#3b82f6; 
+    outline:none; border-color:#3b82f6;
     box-shadow:0 0 0 3px rgba(59,130,246,0.1); 
   }
 </style>
 
 <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-60 grayscale-[20%]"
        style="background-image: url('/hero.png');">
   </div>
   <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>
@@ -175,11 +192,12 @@
 
     <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8 text-gray-900 animated-item" use:animateOnScroll>
       Software seguro que<br/>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">escala tu negocio.</span>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-600">escala tu negocio.</span>
     </h1>
 
     <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animated-item" use:animateOnScroll>
-      Ingeniería de software de alto nivel. Desarrollo SvelteKit, ciberseguridad y automatización para empresas que valoran la calidad.
+      Ingeniería de software de alto nivel.
+      Desarrollo SvelteKit, ciberseguridad y automatización para empresas que valoran la calidad.
     </p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animated-item" use:animateOnScroll>
@@ -226,34 +244,21 @@
       <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Servicios de Ingeniería</h2>
       <p class="mt-4 text-lg text-gray-600">Soluciones técnicas robustas para problemas de negocio complejos.</p>
     </div>
+    
     <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {#each [
-        { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG, rutas protegidas','Pasarelas de Pago','CI/CD automatizado'] },
-        { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura','Threat modeling (OWASP)','Planes de respuesta'] },
-        { icon: icons.zap, title:'Automatización & IA', desc:'Optimización de procesos con scripts y modelos de lenguaje (LLMs).', bullets:['Procesamiento de documentos','Asistentes virtuales','Análisis de datos'] },
-        { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infraestructura como código. Despliegues escalables.', bullets:['Pipelines CI/CD','Monitoreo y Logs','Optimización de costos'] },
-        { icon: icons.chat, title:'Consultoría Técnica', desc:'Asesoramiento estratégico para líderes de proyecto.', bullets:['Evaluación de arquitectura','Revisión de código','Planificación de Roadmap'] }
-      ] as s}
-        <article class="card-glass rounded-xl p-8 animated-item" use:animateOnScroll>
-          <div class="flex items-center gap-4">
-            <div class="h-10 w-10 text-blue-600 flex items-center justify-center flex-shrink-0 bg-blue-50 rounded-lg">{@html s.icon}</div>
-            <h3 class="text-xl font-bold text-gray-900">{s.title}</h3>
-          </div>
-          <p class="mt-4 text-gray-600 text-sm leading-relaxed">{s.desc}</p>
-          <ul class="mt-6 space-y-2 text-xs text-gray-500 font-mono list-disc pl-4">
-            {#each s.bullets as b}<li>{b}</li>{/each}
-          </ul>
-        </article>
+      {#each servicesData as s}
+        <div class="animated-item" use:animateOnScroll>
+            <ServiceCard data={s} />
+        </div>
       {/each}
     </div>
+
   </div>
 </section>
 
 <section id="casos" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
-  
   <div class="absolute inset-0 -z-30 h-full w-full bg-gray-100">
   </div>
-
   <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/40 to-[#fafafa]"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -264,11 +269,35 @@
     
     <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {#each [
-        { title:'SENDO · Salud', p:'Plataforma de gestión. Reducción del 40% en tiempos de coordinación.', bullets:['SvelteKit + Firebase','Panel admin en tiempo real'], src:'/logos/logosendo.jpg' },
-        { title:'Delicias Porteñas', p:'E-commerce moderno y autogestionable para cadena de panaderías.', bullets:['Generación con IA','Pasarela de Pagos', 'Chat-Bot'], src:'/logos/logodelicias.jpg' },
-        { title:'FinderApp · Logística', p:'Sistema de recuperación de activos mediante QR únicos.', bullets:['Seguridad Firestore','Interfaz móvil'], src:'/logos/logofinder.jpg' }
+        { 
+            title:'SENDO · Salud', 
+            p:'Plataforma de gestión. Reducción del 40% en tiempos de coordinación.', 
+            bullets:['SvelteKit + Firebase','Panel admin en tiempo real'], 
+            src:'/logos/logosendo.jpg',
+            href: 'https://enfermeriasendo.cl' 
+        },
+        { 
+            title:'Delicias Porteñas', 
+            p:'E-commerce moderno y autogestionable para cadena de panaderías.', 
+            bullets:['Generación con IA','Pasarela de Pagos', 'Chat-Bot'], 
+            src:'/logos/logodelicias.jpg',
+            href: 'https://deliciasporteñas.cl'
+        },
+        { 
+            title:'FinderApp · Logística', 
+            p:'Sistema de recuperación de activos mediante QR únicos.', 
+            bullets:['Seguridad Firestore','Interfaz móvil'], 
+            src:'/logos/logofinder.jpg',
+            href: 'https://finderweb.vercel.app/'
+        }
       ] as c}
-        <article class="card-glass rounded-xl overflow-hidden group animated-item" use:animateOnScroll>
+        <a 
+            href={c.href} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="card-glass rounded-xl overflow-hidden group animated-item block hover:shadow-xl transition-all duration-300" 
+            use:animateOnScroll
+        >
           <div class="h-48 bg-gray-100 border-b border-gray-200 relative group-hover:bg-gray-200 transition-colors flex items-center justify-center p-8">
             <img 
               src={c.src} 
@@ -278,7 +307,13 @@
           </div>
           
           <div class="p-8">
-            <h3 class="font-bold text-gray-900 text-lg">{c.title}</h3>
+            <h3 class="font-bold text-gray-900 text-lg flex items-center gap-2">
+                {c.title}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors">
+                  <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" />
+                  <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
+                </svg>
+            </h3>
             <p class="mt-2 text-sm text-gray-600">{c.p}</p>
             <div class="mt-4 flex flex-wrap gap-2">
               {#each c.bullets as b}
@@ -286,17 +321,17 @@
               {/each}
             </div>
           </div>
-        </article>
+        </a>
       {/each}
     </div>
   </div>
 </section>
 
 <section class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
- <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
-       style="background-image: url('/fondo3.png');">
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-20 grayscale-[20%]"
+       style="background-image: url('/fondo2.png');">
   </div>
-  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -361,59 +396,10 @@
   </div>
 </section>
 
-<section id="proceso" class="relative py-20 lg:py-28 border-t border-gray-200">
-   <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
-       style="background-image: url('/fondo4.png');">
-  </div>
-  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl animated-item" use:animateOnScroll>
-      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Metodología</h2>
-      <p class="mt-4 text-lg text-gray-600">Un proceso estructurado para garantizar calidad.</p>
-    </div>
-    <div class="mt-12 grid gap-6 md:grid-cols-4">
-      {#each [
-        {n:'01', t:'Descubrimiento', d:'Análisis de requerimientos y viabilidad técnica.'},
-        {n:'02', t:'Estrategia', d:'Definición de arquitectura, stack tecnológico y cronograma.'},
-        {n:'03', t:'Desarrollo', d:'Sprints iterativos con demos quincenales.'},
-        {n:'04', t:'Entrega', d:'Despliegue a producción, capacitación y entrega de documentación.'}
-      ] as step}
-        <div class="card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
-          <div class="text-4xl font-bold text-gray-200 mb-4">{step.n}</div>
-          <h3 class="font-bold text-gray-900 mb-2">{step.t}</h3>
-          <p class="text-sm text-gray-600">{step.d}</p>
-        </div>
-      {/each}
-    </div>
-  </div>
-</section>
-
-<section id="testimonios" class="py-20 lg:py-28 border-t border-gray-200">
-  
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    
-    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-12 animated-item" use:animateOnScroll>Testimonios</h2>
-    <div class="grid gap-6 md:grid-cols-3">
-      {#each [
-        {q:'“Pasamos de planillas a una app usable. El onboarding fue impecable.”', a:'EnfermeriaSENDO.cl'},
-        {q:'“Nos dio una identidad en la web con un excelente producto.”', a:'DeliciasPorteñas.cl'},
-        {q:'“Implementó sistema de cámaras y antivirus, ahora dormimos tranquilos.”', a:'Cliente Particular'},
-        {q:'“Nos otorgó una solución cloud completa y profesional.”', a:'AsvipChile.cl'},
-        {q:'“Trabajo serio, rápido y con excelente disposición.”', a:'AstorgayAsociados.com'},
-        {q:'“Solución rápida y económica. Felices.”', a:'ContratistaMCR.cl'}
-      ] as t}
-        <blockquote class="card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
-          <p class="text-gray-700 italic mb-4 text-sm font-medium">"{t.q}"</p>
-          <footer class="text-xs text-gray-500 font-bold uppercase tracking-wide">— {t.a}</footer>
-        </blockquote>
-      {/each}
-    </div>
-  </div>
-</section>
 
 <section id="faq" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
- <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-10 grayscale-[20%]"
        style="background-image: url('/fondo2.png');">
   </div>
   <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/60 to-[#fafafa]"></div>
@@ -438,11 +424,65 @@
   </div>
 </section>
 
-<section id="contacto" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
- <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-100 grayscale-[20%]"
-       style="background-image: url('/fondo5.png');">
+<section id="proceso" class="relative py-20 lg:py-28 border-t border-gray-200">
+   <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-20 grayscale-[20%]"
+       style="background-image: url('/fondo4.png');">
   </div>
-  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+  <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-3xl animated-item" use:animateOnScroll>
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Metodología</h2>
+      <p class="mt-4 text-lg text-gray-600">Un proceso estructurado para garantizar calidad.</p>
+    </div>
+    
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4"> {#each [
+        {n:'01', t:'Descubrimiento', d:'Análisis de requerimientos y viabilidad técnica.'},
+        {n:'02', t:'Estrategia', d:'Definición de arquitectura, stack tecnológico y cronograma.'},
+        {n:'03', t:'Desarrollo', d:'Sprints iterativos con demos quincenales.'},
+        {n:'04', t:'Entrega', d:'Despliegue a producción, capacitación y entrega de documentación.'}
+      ] as step}
+        
+        <div class="animated-item h-full" use:animateOnScroll>
+            <TiltCard step={step} />
+        </div>
+
+      {/each}
+    </div>
+  </div>
+</section>
+
+
+
+<section id="testimonios" class="py-20 lg:py-28 border-t border-gray-200 bg-gray-50/50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    
+    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-12 animated-item" use:animateOnScroll>Testimonios</h2>
+    
+    <div class="grid gap-6 md:grid-cols-3">
+      {#each [
+        {q:'Pasamos de planillas a una app usable. El onboarding fue impecable.', a:'EnfermeriaSENDO.cl'},
+        {q:'Nos dio una identidad en la web con un excelente producto.', a:'DeliciasPorteñas.cl'},
+        {q:'Implementó sistema de cámaras y antivirus, ahora dormimos tranquilos.', a:'Cliente Particular'},
+        {q:'Nos otorgó una solución cloud completa y profesional.', a:'AsvipChile.cl'},
+        {q:'Trabajo serio, rápido y con excelente disposición.', a:'AstorgayAsociados.com'},
+        {q:'Solución rápida y económica. Felices.', a:'ContratistaMCR.cl'}
+      ] as t}
+        
+        <div class="animated-item h-full" use:animateOnScroll>
+            <SpotlightCard data={t} />
+        </div>
+
+      {/each}
+    </div>
+  </div>
+</section>
+
+
+<section id="contacto" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-5 grayscale-[20%]"
+       style="background-image: url('/fondo6.png');">
+  </div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid lg:grid-cols-2 gap-16">
@@ -471,7 +511,6 @@
             method="POST"
             on:submit={enviar}
             aria-label="Formulario de contacto">
-        
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_next" value={`${siteUrl}/gracias`} />
 

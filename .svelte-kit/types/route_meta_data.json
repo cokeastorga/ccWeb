@@ -9,6 +9,9 @@
 	"/privacidad": [
 		"src/routes/+layout.ts"
 	],
+	"/prueba": [
+		"src/routes/+layout.ts"
+	],
 	"/terminos": [
 		"src/routes/+layout.ts"
 	]
