@@ -40,6 +40,6 @@ declare module "$app/types" {
 		};
 		Pathname(): "/" | "/gracias" | "/gracias/" | "/privacidad" | "/privacidad/" | "/prueba" | "/prueba/" | "/terminos" | "/terminos/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/favicon.ico" | "/fondo1.png" | "/fondo2.png" | "/fondo3.png" | "/fondo4.png" | "/fondo5.png" | "/fondo6.png" | "/hero.png" | "/logos/logoasvip.jpg" | "/logos/logodelicias.jpg" | "/logos/logofinder.jpg" | "/logos/logosat.jpg" | "/logos/logosendo.jpg" | "/og-image.jpg" | "/videos/fondohero.webm" | string & {};
+		Asset(): "/favicon.ico" | "/fondo1.png" | "/fondo2.png" | "/fondo3.png" | "/fondo4.png" | "/fondo5.png" | "/fondo6.png" | "/hero.png" | "/logos/logoasvip.jpg" | "/logos/logodelicias.jpg" | "/logos/logofinder.jpg" | "/logos/logosat.jpg" | "/logos/logosendo.jpg" | "/mariposa.json" | "/og-image.jpg" | "/videos/fondohero.webm" | string & {};
 	}
 }
