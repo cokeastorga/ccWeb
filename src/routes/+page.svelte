@@ -167,7 +167,7 @@
 
     <div class="animated-item mb-8" use:animateOnScroll>
       <FlyingMascot 
-        titleLines={['Software seguro que', 'escala tu negocio.']} 
+        titleLines={['Soluciones digitales', 'para tu negocio.']} 
         lottieSrc={butterflyLottie}
       />
     </div>
