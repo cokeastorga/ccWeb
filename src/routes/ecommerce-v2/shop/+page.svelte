@@ -1,49 +1,55 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import { fade, fly } from 'svelte/transition';
-    import { products } from '$lib/data/products'; // Tus datos centrales
+    import { products } from '$lib/data/products';
     import ProductCard from '$lib/components/ecommerce/ProductCard.svelte';
     import { addToCart } from '$lib/stores/cart';
     import { showToast, openCart } from '$lib/stores/ui';
-    import type { Product } from '$lib/types'; // Asegúrate de importar la interfaz correcta
+    import type { Product } from '$lib/types';
+
+    // Estado Local
+    let searchQuery = '';
+    let sortOption = 'default'; // 'default', 'price-asc', 'price-desc', 'name-asc'
 
     // 1. Obtener la categoría activa de la URL
     $: activeCategory = $page.url.searchParams.get('cat') || 'all';
 
-    // 2. Lógica de Filtrado "Senior" (Flexible)
-    $: filteredProducts = products.filter(p => {
-        const cat = activeCategory.toLowerCase();
-        
-        // Caso: Mostrar todo
-        if (cat === 'all') return true;
+    // 2. Lógica de Filtrado y Búsqueda Combinada
+    $: filteredProducts = products
+        .filter(p => {
+            const cat = activeCategory.toLowerCase();
+            const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+            
+            // Si la búsqueda no coincide, descartamos inmediatamente
+            if (!matchesSearch) return false;
 
-        // Caso: Novedades (Busca por badge)
-        if (cat === 'novedades') return p.badge === 'New';
-
-        // Caso: Sillas (Busca por texto en el nombre O categoría exacta)
-        if (cat === 'sillas') {
-            return p.name.toLowerCase().includes('silla') || p.category === 'Mobiliario';
-        }
-
-        // Caso: Lámparas (Mapeo a categoría técnica 'Iluminación')
-        if (cat === 'lamparas' || cat === 'iluminacion') {
-            return p.category === 'Iluminación';
-        }
-
-        // Caso por defecto: Coincidencia exacta de categoría
-        return p.category.toLowerCase() === cat;
-    }).map(p => ({
-        // 3. Adaptador de Tipos:
-        // Convertimos 'ProductData' (con images[]) a 'Product' (con image string)
-        // para que el componente ProductCard lo entienda.
-        ...p,
-        image: p.images[0] // Usamos la primera imagen como principal
-    }));
+            // Filtros de Categoría
+            if (cat === 'all') return true;
+            if (cat === 'novedades') return p.badge === 'New';
+            if (cat === 'sillas') return p.name.toLowerCase().includes('silla') || p.category === 'Mobiliario';
+            if (cat === 'lamparas' || cat === 'iluminacion') return p.category === 'Iluminación';
+            
+            return p.category.toLowerCase() === cat;
+        })
+        .sort((a, b) => {
+            // Lógica de Ordenamiento
+            if (sortOption === 'price-asc') return a.price - b.price;
+            if (sortOption === 'price-desc') return b.price - a.price;
+            if (sortOption === 'name-asc') return a.name.localeCompare(b.name);
+            return 0; // Default
+        })
+        .map(p => ({
+            ...p,
+            image: p.images ? p.images[0] : p.image // Adaptador de imagen seguro
+        }));
 
     // Acción de añadir al carrito
     function handleAdd(product: any) {
-        // Adaptamos el producto al formato del carrito si es necesario
-        const cartItem = { ...product, image: product.images ? product.images[0] : product.image };
+        // Aseguramos formato correcto para el carrito
+        const cartItem = { 
+            ...product, 
+            image: product.image 
+        };
         addToCart(cartItem);
         showToast(`Agregado: ${product.name}`);
         openCart();
@@ -57,45 +63,73 @@
 <div class="min-h-screen bg-white pt-8 pb-24 px-6">
     <div class="max-w-7xl mx-auto">
         
-        <div class="text-center mb-16 pt-10 animate-in slide-in-from-bottom-4 duration-700">
+        <div class="text-center mb-12 pt-10 animate-in slide-in-from-bottom-4 duration-700">
             <span class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">Colección 2024</span>
             <h1 class="text-4xl md:text-5xl font-serif mb-6 capitalize text-gray-900">
                 {activeCategory === 'all' ? 'Catálogo Completo' : activeCategory}
             </h1>
             <p class="text-gray-500 max-w-lg mx-auto leading-relaxed">
                 {#if activeCategory === 'novedades'}
-                    Descubre las últimas piezas que acaban de llegar a nuestro estudio. Diseño fresco y vanguardista.
-                {:else if activeCategory === 'iluminacion' || activeCategory === 'lamparas'}
-                    Luz cálida y escultural para transformar la atmósfera de cualquier espacio.
+                    Descubre las últimas piezas que acaban de llegar a nuestro estudio.
                 {:else}
-                    Explora nuestra selección curada de diseño minimalista, donde cada objeto cuenta una historia.
+                    Explora nuestra selección curada de diseño minimalista.
                 {/if}
             </p>
         </div>
 
-        <div class="flex justify-center flex-wrap gap-3 mb-18">
-            {#each ['all', 'novedades', 'sillas', 'lamparas', 'decoración'] as filter}
-                <a 
-                    href="?cat={filter}"
-                    class="px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border 
-                    {activeCategory === filter 
-                        ? 'bg-black text-white border-black shadow-lg transform scale-105' 
-                        : 'bg-white text-gray-600 border-gray-200 hover:border-black hover:text-black'}"
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-10 border-b border-gray-100 pb-8 sticky top-20 bg-white/95 backdrop-blur-sm z-30 py-4">
+            
+            <div class="flex flex-wrap justify-center gap-2">
+                {#each ['all', 'novedades', 'sillas', 'lamparas', 'decoración'] as filter}
+                    <a 
+                        href="?cat={filter}"
+                        on:click={() => searchQuery = ''} 
+                        class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all border 
+                        {activeCategory === filter 
+                            ? 'bg-black text-white border-black' 
+                            : 'bg-gray-50 text-gray-500 border-transparent hover:border-gray-300 hover:text-black'}"
+                    >
+                        {filter === 'all' ? 'Todo' : filter}
+                    </a>
+                {/each}
+            </div>
+
+            <div class="flex gap-4 w-full md:w-auto">
+                <div class="relative flex-1 md:w-64">
+                    <input 
+                        type="text" 
+                        bind:value={searchQuery}
+                        placeholder="Buscar productos..." 
+                        class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-transparent focus:bg-white focus:border-black rounded-lg outline-none transition-all text-sm"
+                    />
+                    <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+
+                <select 
+                    bind:value={sortOption}
+                    class="px-4 py-2 bg-gray-50 border border-transparent focus:bg-white focus:border-black rounded-lg outline-none text-sm cursor-pointer"
                 >
-                    {filter === 'all' ? 'Ver Todo' : filter.charAt(0).toUpperCase() + filter.slice(1)}
-                </a>
-            {/each}
+                    <option value="default">Relevancia</option>
+                    <option value="price-asc">Precio: Bajo a Alto</option>
+                    <option value="price-desc">Precio: Alto a Bajo</option>
+                    <option value="name-asc">Nombre (A-Z)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-8 text-sm text-gray-500 font-medium">
+            Mostrando {filteredProducts.length} productos
         </div>
 
         {#if filteredProducts.length > 0}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8">
                 {#each filteredProducts as product, i (product.id)}
                     <div 
-                        in:fly={{ y: 20, duration: 500, delay: i * 50 }} 
+                        in:fly={{ y: 20, duration: 500, delay: (i % 10) * 50 }} 
                         class="h-full"
                     >
                         <div class="group relative flex flex-col gap-4 cursor-pointer h-full">
-                            <div class="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-gray-100 shadow-sm transition-shadow hover:shadow-xl">
+                            <div class="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-gray-100 shadow-sm transition-all duration-500 group-hover:shadow-lg">
                                 <img 
                                     src={product.image} 
                                     alt={product.name}
@@ -104,46 +138,42 @@
                                 />
                                 
                                 {#if product.badge}
-                                    <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider z-10 shadow-sm">
+                                    <span class="absolute top-3 left-3 bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider z-10">
                                         {product.badge}
                                     </span>
                                 {/if}
 
                                 <button 
                                     on:click|stopPropagation={() => handleAdd(product)}
-                                    class="absolute bottom-4 right-4 bg-white text-black p-4 rounded-full shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black hover:text-white z-20"
+                                    class="absolute bottom-3 right-3 bg-white text-black p-3 rounded-full shadow-lg translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black hover:text-white hover:scale-110 z-20"
                                     aria-label="Añadir al carrito"
                                 >
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                                 </button>
                             </div>
 
-                            <div class="flex justify-between items-start px-1">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <h3 class="font-medium text-lg text-gray-900 group-hover:underline decoration-1 underline-offset-4">{product.name}</h3>
-                                    <p class="text-sm text-gray-500 mt-1">{product.category}</p>
+                                    <h3 class="font-medium text-gray-900 group-hover:underline underline-offset-4 decoration-1">{product.name}</h3>
+                                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-wide">{product.category}</p>
                                 </div>
-                                <p class="font-serif text-lg font-medium text-gray-900">${product.price}</p>
+                                <p class="font-medium text-gray-900">${product.price}</p>
                             </div>
                         </div>
                     </div>
                 {/each}
             </div>
         {:else}
-            <div class="flex flex-col items-center justify-center py-32 text-center animate-in fade-in zoom-in duration-500">
-                <div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 text-4xl">
-                    🔍
-                </div>
-                <h3 class="text-2xl font-serif mb-2 text-gray-900">Sin resultados</h3>
-                <p class="text-gray-500 max-w-md mb-8">
-                    No encontramos productos en la categoría "{activeCategory}". Intenta con otra selección.
-                </p>
-                <a 
-                    href="?cat=all" 
-                    class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition-all"
+            <div class="py-32 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4 text-2xl">🕵️</div>
+                <h3 class="text-xl font-medium text-gray-900 mb-2">No encontramos coincidencias</h3>
+                <p class="text-gray-500 mb-6">Intenta ajustar tu búsqueda o los filtros.</p>
+                <button 
+                    on:click={() => { searchQuery = ''; activeCategory = 'all'; }}
+                    class="text-black underline underline-offset-4 hover:text-gray-600"
                 >
-                    Volver al Catálogo
-                </a>
+                    Limpiar todos los filtros
+                </button>
             </div>
         {/if}
     </div>
