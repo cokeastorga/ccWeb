@@ -2,26 +2,26 @@
     import '../../app.css';
     import { fade, slide } from 'svelte/transition';
     import { page } from '$app/stores';
-    import { onMount } from 'svelte';
-
+    
     // Componentes UI
     import CartDrawer from '$lib/components/ecommerce/CartDrawer.svelte';
     import Toast from '$lib/components/ecommerce/Toast.svelte';
-    
-    // Si tienes el archivo CartFab.svelte, descomenta la siguiente línea:
-    // import CartFab from '$lib/components/ecommerce/CartFab.svelte'; 
-
     import { openCart } from '$lib/stores/ui';
     import { cartCount } from '$lib/stores/cart';
 
     let isMobileMenuOpen = false;
-    let y = 0; // Variable para detectar el scroll vertical
+    let y = 0;
 
-    // Cierra el menú móvil automáticamente al cambiar de ruta
     $: $page.url.pathname, (isMobileMenuOpen = false);
 
     // Helper para saber si un link está activo
-    $: isActive = (path: string) => $page.url.pathname === path || $page.url.hash === path;
+    // (Ahora verificamos si la URL contiene el parámetro de categoría)
+    $: isActive = (path: string, param?: string) => {
+        if (param) {
+            return $page.url.searchParams.get('cat') === param;
+        }
+        return $page.url.pathname === path;
+    };
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -52,22 +52,22 @@
 
             <div class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
                 <a 
-                    href="/ecommerce-v2#new" 
-                    class="transition-colors hover:text-black {isActive('#new') ? 'text-black font-semibold' : ''}"
+                    href="/ecommerce-v2/shop?cat=novedades" 
+                    class="transition-colors hover:text-black {isActive('/ecommerce-v2/shop', 'novedades') ? 'text-black font-semibold' : ''}"
                 >
                     Novedades
                 </a>
                 <a 
-                    href="/ecommerce-v2#shop" 
-                    class="transition-colors hover:text-black {isActive('#shop') ? 'text-black font-semibold' : ''}"
+                    href="/ecommerce-v2/shop?cat=all" 
+                    class="transition-colors hover:text-black {isActive('/ecommerce-v2/shop', 'all') ? 'text-black font-semibold' : ''}"
                 >
                     Colección
                 </a>
                 <a 
-                    href="/ecommerce-v2#editorial" 
-                    class="transition-colors hover:text-black {isActive('#editorial') ? 'text-black font-semibold' : ''}"
+                    href="/ecommerce-v2/shop?cat=decoración" 
+                    class="transition-colors hover:text-black {isActive('/ecommerce-v2/shop', 'decoración') ? 'text-black font-semibold' : ''}"
                 >
-                    Editorial
+                    Decoración
                 </a>
             </div>
 
@@ -93,9 +93,9 @@
                 class="md:hidden absolute top-16 left-0 w-full bg-white border-b border-gray-100 shadow-xl flex flex-col p-6 gap-6 text-lg font-medium z-30"
                 transition:slide={{ duration: 300, axis: 'y' }}
             >
-                <a href="/ecommerce-v2#new" class="hover:text-gray-600">Novedades</a>
-                <a href="/ecommerce-v2#shop" class="hover:text-gray-600">Colección</a>
-                <a href="/ecommerce-v2#editorial" class="hover:text-gray-600">Editorial</a>
+                <a href="/ecommerce-v2/shop?cat=novedades" on:click={() => isMobileMenuOpen = false} class="hover:text-gray-600">Novedades</a>
+                <a href="/ecommerce-v2/shop?cat=all" on:click={() => isMobileMenuOpen = false} class="hover:text-gray-600">Colección</a>
+                <a href="/ecommerce-v2/shop?cat=decoración" on:click={() => isMobileMenuOpen = false} class="hover:text-gray-600">Decoración</a>
             </div>
         {/if}
     </nav>
@@ -114,5 +114,4 @@
 
     <CartDrawer />
     <Toast />
-    
-    </div>
+</div>
