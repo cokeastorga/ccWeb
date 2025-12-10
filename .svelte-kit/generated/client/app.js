@@ -7,17 +7,24 @@ export const nodes = [
 	() => import('./nodes/3'),
 	() => import('./nodes/4'),
 	() => import('./nodes/5'),
-	() => import('./nodes/6')
+	() => import('./nodes/6'),
+	() => import('./nodes/7'),
+	() => import('./nodes/8'),
+	() => import('./nodes/9'),
+	() => import('./nodes/10')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [2],
-		"/gracias": [3],
-		"/privacidad": [4],
-		"/prueba": [5],
-		"/terminos": [6]
+		"/": [3],
+		"/ecommerce-v2": [4,[2]],
+		"/ecommerce-v2/product/checkout": [5,[2]],
+		"/ecommerce-v2/product/success": [6,[2]],
+		"/ecommerce-v2/product/[id]": [7,[2]],
+		"/gracias": [8],
+		"/privacidad": [9],
+		"/terminos": [10]
 	};
 
 export const hooks = {

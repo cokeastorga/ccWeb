@@ -3,13 +3,24 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.ts"
 	],
+	"/ecommerce-v2": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v2/product/checkout": [
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v2/product/success": [
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v2/product/[id]": [
+		"src/routes/ecommerce-v2/product/[id]/+page.ts",
+		"src/routes/+layout.ts"
+	],
 	"/gracias": [
 		"src/routes/+layout.ts"
 	],
 	"/privacidad": [
-		"src/routes/+layout.ts"
-	],
-	"/prueba": [
 		"src/routes/+layout.ts"
 	],
 	"/terminos": [
