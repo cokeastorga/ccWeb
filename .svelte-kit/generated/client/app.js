@@ -11,7 +11,8 @@ export const nodes = [
 	() => import('./nodes/7'),
 	() => import('./nodes/8'),
 	() => import('./nodes/9'),
-	() => import('./nodes/10')
+	() => import('./nodes/10'),
+	() => import('./nodes/11')
 ];
 
 export const server_loads = [];
@@ -19,12 +20,13 @@ export const server_loads = [];
 export const dictionary = {
 		"/": [3],
 		"/ecommerce-v2": [4,[2]],
-		"/ecommerce-v2/product/checkout": [5,[2]],
-		"/ecommerce-v2/product/success": [6,[2]],
-		"/ecommerce-v2/product/[id]": [7,[2]],
-		"/gracias": [8],
-		"/privacidad": [9],
-		"/terminos": [10]
+		"/ecommerce-v2/checkout": [5,[2]],
+		"/ecommerce-v2/product/[id]": [6,[2]],
+		"/ecommerce-v2/shop": [7,[2]],
+		"/ecommerce-v2/success": [8,[2]],
+		"/gracias": [9],
+		"/privacidad": [10],
+		"/terminos": [11]
 	};
 
 export const hooks = {

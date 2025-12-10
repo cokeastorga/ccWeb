@@ -27,22 +27,23 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/ecommerce-v2" | "/ecommerce-v2/product" | "/ecommerce-v2/product/checkout" | "/ecommerce-v2/product/success" | "/ecommerce-v2/product/[id]" | "/gracias" | "/privacidad" | "/terminos";
+		RouteId(): "/" | "/ecommerce-v2" | "/ecommerce-v2/checkout" | "/ecommerce-v2/product" | "/ecommerce-v2/product/[id]" | "/ecommerce-v2/shop" | "/ecommerce-v2/success" | "/gracias" | "/privacidad" | "/terminos";
 		RouteParams(): {
 			"/ecommerce-v2/product/[id]": { id: string }
 		};
 		LayoutParams(): {
 			"/": { id?: string };
 			"/ecommerce-v2": { id?: string };
+			"/ecommerce-v2/checkout": Record<string, never>;
 			"/ecommerce-v2/product": { id?: string };
-			"/ecommerce-v2/product/checkout": Record<string, never>;
-			"/ecommerce-v2/product/success": Record<string, never>;
 			"/ecommerce-v2/product/[id]": { id: string };
+			"/ecommerce-v2/shop": Record<string, never>;
+			"/ecommerce-v2/success": Record<string, never>;
 			"/gracias": Record<string, never>;
 			"/privacidad": Record<string, never>;
 			"/terminos": Record<string, never>
 		};
-		Pathname(): "/" | "/ecommerce-v2" | "/ecommerce-v2/" | "/ecommerce-v2/product" | "/ecommerce-v2/product/" | "/ecommerce-v2/product/checkout" | "/ecommerce-v2/product/checkout/" | "/ecommerce-v2/product/success" | "/ecommerce-v2/product/success/" | `/ecommerce-v2/product/${string}` & {} | `/ecommerce-v2/product/${string}/` & {} | "/gracias" | "/gracias/" | "/privacidad" | "/privacidad/" | "/terminos" | "/terminos/";
+		Pathname(): "/" | "/ecommerce-v2" | "/ecommerce-v2/" | "/ecommerce-v2/checkout" | "/ecommerce-v2/checkout/" | "/ecommerce-v2/product" | "/ecommerce-v2/product/" | `/ecommerce-v2/product/${string}` & {} | `/ecommerce-v2/product/${string}/` & {} | "/ecommerce-v2/shop" | "/ecommerce-v2/shop/" | "/ecommerce-v2/success" | "/ecommerce-v2/success/" | "/gracias" | "/gracias/" | "/privacidad" | "/privacidad/" | "/terminos" | "/terminos/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/favicon.ico" | "/fondo1.png" | "/fondo2.png" | "/fondo3.png" | "/fondo4.png" | "/fondo5.png" | "/fondo6.png" | "/hero.png" | "/logos/logoasvip.jpg" | "/logos/logodelicias.jpg" | "/logos/logofinder.jpg" | "/logos/logosat.jpg" | "/logos/logosendo.jpg" | "/mariposa.json" | "/og-image.jpg" | "/videos/fondohero.webm" | string & {};
 	}

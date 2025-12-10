@@ -7,14 +7,17 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.ts"
 	],
-	"/ecommerce-v2/product/checkout": [
-		"src/routes/+layout.ts"
-	],
-	"/ecommerce-v2/product/success": [
+	"/ecommerce-v2/checkout": [
 		"src/routes/+layout.ts"
 	],
 	"/ecommerce-v2/product/[id]": [
 		"src/routes/ecommerce-v2/product/[id]/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v2/shop": [
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v2/success": [
 		"src/routes/+layout.ts"
 	],
 	"/gracias": [

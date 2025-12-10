@@ -26,15 +26,21 @@
         <a href="/#servicios" class="hover:text-brand-600 transition-colors">Servicios</a>
         <a href="/#casos" class="hover:text-brand-600 transition-colors">Casos</a>
         <a href="/#proceso" class="hover:text-brand-600 transition-colors">Proceso</a>
+         <a href="/#contacto" class="hover:text-brand-600 transition-colors">Agendar</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="/#contacto" class="hidden md:block text-xs font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-500/20 transition-all transform hover:-translate-y-0.5">
-          Agendar
+        <a href="/ecommerce-v2" class="hidden md:block text-xs font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-500/20 transition-all transform hover:-translate-y-0.5">
+          Plantilla: E-commerce
         </a>
-        <button class="md:hidden text-gray-500 hover:text-brand-600" on:click={() => (mobileOpen = !mobileOpen)}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
+        <button 
+  aria-label="Abrir menú"
+  class="md:hidden text-gray-500 hover:text-brand-600" 
+  on:click={() => (mobileOpen = !mobileOpen)}
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+</button>
+
       </div>
     </nav>
 
@@ -42,8 +48,10 @@
       <div class="absolute top-full mt-4 w-[90%] max-w-sm glass rounded-2xl p-4 flex flex-col gap-2 text-center border border-gray-100 shadow-xl">
         <a href="/#servicios" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Servicios</a>
         <a href="/#casos" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Casos</a>
-        <a href="/#contacto" class="text-sm font-bold text-white bg-brand-600 py-3 rounded-xl shadow-md mt-2" on:click={() => (mobileOpen=false)}>Agendar llamada</a>
+        <a href="/#contacto" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Agendar llamada</a>
+        <a href="/ecommerce-v2" class="text-sm font-bold text-white bg-brand-600 py-3 rounded-xl shadow-md mt-2" on:click={() => (mobileOpen=false)}>Plantilla: E-commerce</a>
       </div>
+      
     {/if}
   </header>
 
