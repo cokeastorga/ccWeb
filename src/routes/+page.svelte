@@ -1,17 +1,20 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
+  
+  // Componentes
   import TiltCard from '$lib/components/TiltCard.svelte';
   import SpotlightCard from '$lib/components/SpotlightCard.svelte';
-  
-  // IMPORTANTE: Asegúrate de que esta ruta sea correcta según donde guardaste el componente
   import ServiceCard from '$lib/components/ServiceCard.svelte';
+  import FlyingMascot from '$lib/components/FlyingMascot.svelte';
 
   // —— CONFIG ——
   const emailTo = 'cokeastorgac@gmail.com';
   const whatsapp = '+56985841810';
   const siteUrl = 'https://ccsolution.cl';
-  const linkedin = 'https://www.linkedin.com/in/cokeastorga';
+  
+  // URL JSON Lottie de la mariposa
+  const butterflyLottie = "https://lottie.host/4a6d6e6a-7f8a-4b9d-9c8e-2f3a4b5c6d7e/bI5X3J2Y1Z.json";
 
   // —— STATE ——
   let formStatus: 'idle' | 'submitting' | 'error' = 'idle';
@@ -61,7 +64,7 @@
   function scrollToTop() { if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // —— ICONS (Ajustados para tema claro) ——
+  // —— ICONS ——
   const icons = {
     code: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5 0-4.5 16.5' /></svg>`,
     shield: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' /></svg>`,
@@ -73,7 +76,6 @@
     arrowUp: `<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' class='w-5 h-5'><path stroke-linecap='round' stroke-linejoin='round' d='M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75' /></svg>`
   };
 
-  // —— DATOS DE SERVICIOS (Extraídos para usarlos con el componente) ——
   const servicesData = [
     { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG, rutas protegidas','Pasarelas de Pago','CI/CD automatizado'] },
     { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura','Threat modeling (OWASP)','Planes de respuesta'] },
@@ -94,8 +96,7 @@
     }
     const onScroll = () => handleScroll();
     window.addEventListener('scroll', onScroll);
-    return () => { window.removeEventListener('scroll', onScroll); 
-    };
+    return () => { window.removeEventListener('scroll', onScroll); };
   });
 </script>
 
@@ -107,13 +108,7 @@
 
 <style>
   :global(html) { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
-  
-  /* —— TEMA CLARO MODERNO —— */
-  :global(body) { 
-    background-color: #fafafa;
-    color: #18181b; 
-    overflow-x: hidden;
-  }
+  :global(body) { background-color: #fafafa; color: #18181b; overflow-x: hidden; }
 
   /* —— UTILITIES —— */
   .glow-orb {
@@ -128,8 +123,6 @@
     z-index: -5;
   }
 
-  /* Mantenemos card-glass global por si se usa en otros lados, 
-     pero ServiceCard.svelte tiene sus propias clases también */
   :global(.card-glass) {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
@@ -151,33 +144,15 @@
   .back-to-top.is-visible { opacity:1; transform:translateY(0); pointer-events: auto; }
   
   :global(.btn) { padding:.75rem 1rem; border-radius:.75rem; font-weight:600; transition:all .2s ease; }
-  :global(.btn-primary) { 
-    background: #18181b; 
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-  }
-  :global(.btn-primary:hover) { 
-    background: #27272a; 
-    transform: translateY(-1px);
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); 
-  }
+  :global(.btn-primary) { background: #18181b; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+  :global(.btn-primary:hover) { background: #27272a; transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15); }
 
-  :global(.input) { 
-    width:100%; border-radius:.75rem; 
-    background: #ffffff;
-    border:1px solid #e4e4e7; 
-    padding:.75rem 1rem; color:#18181b; 
-  }
-  :global(.input:focus) { 
-    outline:none; border-color:#3b82f6;
-    box-shadow:0 0 0 3px rgba(59,130,246,0.1); 
-  }
+  :global(.input) { width:100%; border-radius:.75rem; background: #ffffff; border:1px solid #e4e4e7; padding:.75rem 1rem; color:#18181b; }
+  :global(.input:focus) { outline:none; border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
 </style>
 
 <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-60 grayscale-[20%]"
-       style="background-image: url('/hero.png');">
-  </div>
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-60 grayscale-[20%]" style="background-image: url('/hero.png');"></div>
   <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>
   <div class="glow-orb z-0 opacity-50"></div>
 
@@ -190,10 +165,12 @@
       Disponibilidad para nuevos proyectos
     </div>
 
-    <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8 text-gray-900 animated-item" use:animateOnScroll>
-      Software seguro que<br/>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-600">escala tu negocio.</span>
-    </h1>
+    <div class="animated-item mb-8" use:animateOnScroll>
+      <FlyingMascot 
+        titleLines={['Software seguro que', 'escala tu negocio.']} 
+        lottieSrc={butterflyLottie}
+      />
+    </div>
 
     <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animated-item" use:animateOnScroll>
       Ingeniería de software de alto nivel.
@@ -235,9 +212,7 @@
 </section>
 
 <section id="servicios" class="relative py-20 lg:py-28 overflow-hidden">
-  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]"
-       style="background-image: url('/fondo1.png');">
-  </div>
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-40 grayscale-[20%]" style="background-image: url('/fondo1.png');"></div>
   <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="max-w-3xl animated-item" use:animateOnScroll>
@@ -252,13 +227,11 @@
         </div>
       {/each}
     </div>
-
   </div>
 </section>
 
 <section id="casos" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
-  <div class="absolute inset-0 -z-30 h-full w-full bg-gray-100">
-  </div>
+  <div class="absolute inset-0 -z-30 h-full w-full bg-gray-100"></div>
   <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/40 to-[#fafafa]"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -269,43 +242,14 @@
     
     <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {#each [
-        { 
-            title:'SENDO · Salud', 
-            p:'Plataforma de gestión. Reducción del 40% en tiempos de coordinación.', 
-            bullets:['SvelteKit + Firebase','Panel admin en tiempo real'], 
-            src:'/logos/logosendo.jpg',
-            href: 'https://enfermeriasendo.cl' 
-        },
-        { 
-            title:'Delicias Porteñas', 
-            p:'E-commerce moderno y autogestionable para cadena de panaderías.', 
-            bullets:['Generación con IA','Pasarela de Pagos', 'Chat-Bot'], 
-            src:'/logos/logodelicias.jpg',
-            href: 'https://deliciasporteñas.cl'
-        },
-        { 
-            title:'FinderApp · Logística', 
-            p:'Sistema de recuperación de activos mediante QR únicos.', 
-            bullets:['Seguridad Firestore','Interfaz móvil'], 
-            src:'/logos/logofinder.jpg',
-            href: 'https://finderweb.vercel.app/'
-        }
+        { title:'SENDO · Salud', p:'Plataforma de gestión. Reducción del 40% en tiempos de coordinación.', bullets:['SvelteKit + Firebase','Panel admin en tiempo real'], src:'/logos/logosendo.jpg', href: 'https://enfermeriasendo.cl' },
+        { title:'Delicias Porteñas', p:'E-commerce moderno y autogestionable para cadena de panaderías.', bullets:['Generación con IA','Pasarela de Pagos', 'Chat-Bot'], src:'/logos/logodelicias.jpg', href: 'https://deliciasporteñas.cl' },
+        { title:'FinderApp · Logística', p:'Sistema de recuperación de activos mediante QR únicos.', bullets:['Seguridad Firestore','Interfaz móvil'], src:'/logos/logofinder.jpg', href: 'https://finderweb.vercel.app/' }
       ] as c}
-        <a 
-            href={c.href} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="card-glass rounded-xl overflow-hidden group animated-item block hover:shadow-xl transition-all duration-300" 
-            use:animateOnScroll
-        >
+        <a href={c.href} target="_blank" rel="noopener" class="card-glass rounded-xl overflow-hidden group animated-item block hover:shadow-xl transition-all duration-300" use:animateOnScroll>
           <div class="h-48 bg-gray-100 border-b border-gray-200 relative group-hover:bg-gray-200 transition-colors flex items-center justify-center p-8">
-            <img 
-              src={c.src} 
-              alt={c.title} 
-              class="w-full h-full object-contain mix-blend-multiply opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-            />
+            <img src={c.src} alt={c.title} class="w-full h-full object-contain mix-blend-multiply opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
           </div>
-          
           <div class="p-8">
             <h3 class="font-bold text-gray-900 text-lg flex items-center gap-2">
                 {c.title}
@@ -422,38 +366,32 @@
   </div>
 </section>
 
-
-
 <section id="faq" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
- <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-10 grayscale-[20%]"
-       style="background-image: url('/fondo2.png');">
-  </div>
-  <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/60 to-[#fafafa]"></div>
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-10 grayscale-[20%]" style="background-image: url('/fondo2.png');"></div>
+ <div class="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/70 to-[#fafafa]"></div>  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-[#fafafa] via-white/60 to-[#fafafa]"></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8 animated-item" use:animateOnScroll>Preguntas Frecuentes</h2>
-    <div class="max-w-3xl space-y-4">
-      {#each [
-        {q:'¿Trabajas con facturación?', a:'Sí. Emisión de boleta o factura electrónica.'},
-        {q:'¿Cuáles son los plazos típicos?', a:'Desde 1 semana para una landing page hasta 6–8 semanas para un MVP funcional.'},
-        {q:'¿Tomas proyectos en curso?', a:'Sí. Realizo una auditoría inicial para evaluar el estado del código.'}
-      ] as f}
-        <details class="group card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
-          <summary class="cursor-pointer font-bold text-gray-900 flex justify-between items-center list-none">
-            {f.q}
-            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">↓</span>
-          </summary>
-          <p class="mt-4 text-gray-600 text-sm leading-relaxed">{f.a}</p>
-        </details>
-      {/each}
-    </div>
-  </div>
+ <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+   <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-8 animated-item" use:animateOnScroll>Preguntas Frecuentes</h2>
+   <div class="max-w-3xl space-y-4">
+     {#each [
+       {q:'¿Trabajas con facturación?', a:'Sí. Emisión de boleta o factura electrónica.'},
+       {q:'¿Cuáles son los plazos típicos?', a:'Desde 1 semana para una landing page hasta 6–8 semanas para un MVP funcional.'},
+       {q:'¿Tomas proyectos en curso?', a:'Sí. Realizo una auditoría inicial para evaluar el estado del código.'}
+     ] as f}
+       <details class="group card-glass rounded-xl p-6 animated-item" use:animateOnScroll>
+         <summary class="cursor-pointer font-bold text-gray-900 flex justify-between items-center list-none">
+           {f.q}
+           <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">↓</span>
+         </summary>
+         <p class="mt-4 text-gray-600 text-sm leading-relaxed">{f.a}</p>
+       </details>
+     {/each}
+   </div>
+ </div>
 </section>
 
 <section id="proceso" class="relative py-20 lg:py-28 border-t border-gray-200">
-   <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-20 grayscale-[20%]"
-       style="background-image: url('/fondo4.png');">
-  </div>
+  <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-20 grayscale-[20%]" style="background-image: url('/fondo4.png');"></div>
   <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#fafafa] via-transparent to-[#fafafa]"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -462,29 +400,24 @@
       <p class="mt-4 text-lg text-gray-600">Un proceso estructurado para garantizar calidad.</p>
     </div>
     
-    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4"> {#each [
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4"> 
+      {#each [
         {n:'01', t:'Descubrimiento', d:'Análisis de requerimientos y viabilidad técnica.'},
         {n:'02', t:'Estrategia', d:'Definición de arquitectura, stack tecnológico y cronograma.'},
         {n:'03', t:'Desarrollo', d:'Sprints iterativos con demos quincenales.'},
         {n:'04', t:'Entrega', d:'Despliegue a producción, capacitación y entrega de documentación.'}
       ] as step}
-        
         <div class="animated-item h-full" use:animateOnScroll>
             <TiltCard step={step} />
         </div>
-
       {/each}
     </div>
   </div>
 </section>
 
-
-
 <section id="testimonios" class="py-20 lg:py-28 border-t border-gray-200 bg-gray-50/50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    
     <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 mb-12 animated-item" use:animateOnScroll>Testimonios</h2>
-    
     <div class="grid gap-6 md:grid-cols-3">
       {#each [
         {q:'Pasamos de planillas a una app usable. El onboarding fue impecable.', a:'EnfermeriaSENDO.cl'},
@@ -494,101 +427,96 @@
         {q:'Trabajo serio, rápido y con excelente disposición.', a:'AstorgayAsociados.com'},
         {q:'Solución rápida y económica. Felices.', a:'ContratistaMCR.cl'}
       ] as t}
-        
         <div class="animated-item h-full" use:animateOnScroll>
             <SpotlightCard data={t} />
         </div>
-
       {/each}
     </div>
   </div>
 </section>
 
-
 <section id="contacto" class="relative py-20 lg:py-28 border-t border-gray-200 overflow-hidden">
- <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-5 grayscale-[20%]"
-       style="background-image: url('/fondo6.png');">
-  </div>
+ <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-5 grayscale-[20%]" style="background-image: url('/fondo6.png');"></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid lg:grid-cols-2 gap-16">
-      <div class="animated-item" use:animateOnScroll>
-        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Hablemos de tu Proyecto</h2>
-        <p class="mt-4 text-lg text-gray-600">Si buscas ingeniería de calidad y visión de largo plazo, estás en el lugar correcto.</p>
-        
-        <div class="mt-8 space-y-4 text-gray-600 font-medium">
-          <div class="flex items-center gap-3">
-            <span>✉️</span> 
-            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`mailto:${emailTo}`}>{emailTo}</a>
-          </div>
-          <div class="flex items-center gap-3">
-            <span>💬</span> 
-            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener">WhatsApp Directo</a>
-          </div>
-        </div>
-      </div>
+ <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+   <div class="grid lg:grid-cols-2 gap-16">
+     <div class="animated-item" use:animateOnScroll>
+       <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">Hablemos de tu Proyecto</h2>
+       <p class="mt-4 text-lg text-gray-600">Si buscas ingeniería de calidad y visión de largo plazo, estás en el lugar correcto.</p>
+       
+       <div class="mt-8 space-y-4 text-gray-600 font-medium">
+         <div class="flex items-center gap-3">
+           <span>✉️</span> 
+           <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`mailto:${emailTo}`}>{emailTo}</a>
+         </div>
+         <div class="flex items-center gap-3">
+           <span>💬</span> 
+           <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener">WhatsApp Directo</a>
+         </div>
+       </div>
+     </div>
 
-      <form class="card-glass rounded-2xl p-8 space-y-6 animated-item" use:animateOnScroll
-            action={`https://formsubmit.co/${emailTo}`}
-            method="POST"
-            on:submit={enviar}
-            aria-label="Formulario de contacto">
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value={`${siteUrl}/gracias`} />
+     <form class="card-glass rounded-2xl p-8 space-y-6 animated-item" use:animateOnScroll
+           action={`https://formsubmit.co/${emailTo}`}
+           method="POST"
+           on:submit={enviar}
+           aria-label="Formulario de contacto">
+       <input type="hidden" name="_captcha" value="false" />
+       <input type="hidden" name="_next" value={`${siteUrl}/gracias`} />
 
-        <div>
-          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="nombre">Nombre Completo</label>
-          <input id="nombre" name="name" type="text" required class="input" autocomplete="name" />
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="email">Correo</label>
-            <input id="email" name="email" type="email" required class="input" autocomplete="email" />
-          </div>
-          <div>
-            <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="telefono">Teléfono</label>
-            <input id="telefono" name="telefono" type="tel" class="input" autocomplete="tel" inputmode="tel" />
-          </div>
-        </div>
-        
-        <div>
-          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="servicio">Interés</label>
-          <select id="servicio" name="servicio" class="input">
-            <option>Desarrollo Web</option>
-            <option>Ciberseguridad</option>
-            <option>Automatización</option>
-            <option>Cloud / DevOps</option>
-            <option>Consultoría</option>
-          </select>
-        </div>
-        
-        <div>
-          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="message" rows={4} required class="input" placeholder="Cuéntame brevemente tu idea."></textarea>
-        </div>
-        
-        {#if formStatus === 'error'}
-          <div class="rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-600 text-center">{formMessage}</div>
-        {/if}
-        
-        <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest" disabled={formStatus === 'submitting'}>
-          {#if formStatus === 'submitting'} Procesando... {:else} Enviar Solicitud {/if}
-        </button>
-      </form>
-    </div>
-  </div>
+       <div>
+         <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="nombre">Nombre Completo</label>
+         <input id="nombre" name="name" type="text" required class="input" autocomplete="name" />
+       </div>
+       
+       <div class="grid md:grid-cols-2 gap-6">
+         <div>
+           <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="email">Correo</label>
+           <input id="email" name="email" type="email" required class="input" autocomplete="email" />
+         </div>
+         <div>
+           <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="telefono">Teléfono</label>
+           <input id="telefono" name="telefono" type="tel" class="input" autocomplete="tel" inputmode="tel" />
+         </div>
+       </div>
+       
+       <div>
+         <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="servicio">Interés</label>
+         <select id="servicio" name="servicio" class="input">
+           <option>Desarrollo Web</option>
+           <option>Ciberseguridad</option>
+           <option>Automatización</option>
+           <option>Cloud / DevOps</option>
+           <option>Consultoría</option>
+         </select>
+       </div>
+       
+       <div>
+         <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="mensaje">Mensaje</label>
+         <textarea id="mensaje" name="message" rows={4} required class="input" placeholder="Cuéntame brevemente tu idea."></textarea>
+       </div>
+       
+       {#if formStatus === 'error'}
+         <div class="rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-600 text-center">{formMessage}</div>
+       {/if}
+       
+       <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest" disabled={formStatus === 'submitting'}>
+         {#if formStatus === 'submitting'} Procesando... {:else} Enviar Solicitud {/if}
+       </button>
+     </form>
+   </div>
+ </div>
 </section>
 
 <div class="cookiebar" id="cookiebar" hidden>
-  <div class="mx-auto max-w-7xl">
-    <div class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-center justify-between shadow-2xl">
-      <p class="text-sm text-gray-600">Este sitio utiliza cookies para métricas anónimas.</p>
-      <div class="flex gap-3">
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-gray-900 text-white" on:click={() => { localStorage.setItem('cookie_ok','1'); (document.getElementById('cookiebar') as HTMLElement).hidden = true; }}>Aceptar</button>
-      </div>
-    </div>
-  </div>
+ <div class="mx-auto max-w-7xl">
+   <div class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-center justify-between shadow-2xl">
+     <p class="text-sm text-gray-600">Este sitio utiliza cookies para métricas anónimas.</p>
+     <div class="flex gap-3">
+       <button class="px-4 py-2 text-xs font-bold rounded-lg bg-gray-900 text-white" on:click={() => { localStorage.setItem('cookie_ok','1'); (document.getElementById('cookiebar') as HTMLElement).hidden = true; }}>Aceptar</button>
+     </div>
+   </div>
+ </div>
 </div>
 
 <a href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener" aria-label="WhatsApp"
@@ -597,5 +525,5 @@
 </a>
 
 <button on:click={scrollToTop} class="back-to-top bg-black text-white p-3 rounded-full shadow-lg {showBackToTop ? 'is-visible' : ''}">
-  {@html icons.arrowUp}
+ {@html icons.arrowUp}
 </button>

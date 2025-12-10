@@ -23,3 +23,23 @@ declare module "svelte/elements" {
 }
 
 export {};
+
+
+declare module "$app/types" {
+	export interface AppTypes {
+		RouteId(): "/" | "/gracias" | "/privacidad" | "/prueba" | "/terminos";
+		RouteParams(): {
+			
+		};
+		LayoutParams(): {
+			"/": Record<string, never>;
+			"/gracias": Record<string, never>;
+			"/privacidad": Record<string, never>;
+			"/prueba": Record<string, never>;
+			"/terminos": Record<string, never>
+		};
+		Pathname(): "/" | "/gracias" | "/gracias/" | "/privacidad" | "/privacidad/" | "/prueba" | "/prueba/" | "/terminos" | "/terminos/";
+		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
+		Asset(): "/favicon.ico" | "/fondo1.png" | "/fondo2.png" | "/fondo3.png" | "/fondo4.png" | "/fondo5.png" | "/fondo6.png" | "/hero.png" | "/logos/logoasvip.jpg" | "/logos/logodelicias.jpg" | "/logos/logofinder.jpg" | "/logos/logosat.jpg" | "/logos/logosendo.jpg" | "/og-image.jpg" | "/videos/fondohero.webm" | string & {};
+	}
+}
