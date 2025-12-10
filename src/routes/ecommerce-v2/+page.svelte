@@ -219,10 +219,10 @@ const activeOffers: Offer[] = [
     <div class="relative z-10 max-w-2xl animate-in slide-in-from-bottom-10 duration-1000">
         <span class="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Colección 2024</span>
         <h1 class="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">
-            Minimalismo <br/> que inspira calma.
+            Esta Pagina para tiendas pequeñas <br/> Podria ser tuya.
         </h1>
         <button class="bg-white text-black px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors duration-300 font-medium">
-            Explorar Colección
+            Simula tu visita
         </button>
     </div>
 </section>
