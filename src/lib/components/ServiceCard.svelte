@@ -45,7 +45,7 @@
     on:panend={handlePanEnd}
     style="transform: translate({$coords.x}px, {$coords.y}px) rotate({$coords.x * 0.1}deg)"
 >
-    <div class="flex items-center gap-4 pointer-events-none"> <div class="h-10 w-10 text-green-600 flex items-center justify-center flex-shrink-0 bg-green-100 rounded-lg">
+    <div class="flex items-center gap-4 pointer-events-none"> <div class="h-10 w-10 text-blue-300 flex items-center justify-center flex-shrink-0 bg-blue-50 rounded-lg">
             {@html data.icon}
         </div>
         <h3 class="text-xl font-bold text-gray-900">{data.title}</h3>

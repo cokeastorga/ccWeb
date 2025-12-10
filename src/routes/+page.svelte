@@ -247,7 +247,7 @@
         { title:'FinderApp · Logística', p:'Sistema de recuperación de activos mediante QR únicos.', bullets:['Seguridad Firestore','Interfaz móvil'], src:'/logos/logofinder.jpg', href: 'https://finderweb.vercel.app/' }
       ] as c}
         <a href={c.href} target="_blank" rel="noopener" class="card-glass rounded-xl overflow-hidden group animated-item block hover:shadow-xl transition-all duration-300" use:animateOnScroll>
-          <div class="h-48 bg-gray-100 border-b border-gray-200 relative group-hover:bg-gray-200 transition-colors flex items-center justify-center p-8">
+          <div class="h-48 bg-gray-100 border-b border-gray-200 relative group-hover:bg-blue-50 transition-colors flex items-center justify-center p-8">
             <img src={c.src} alt={c.title} class="w-full h-full object-contain mix-blend-multiply opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
           </div>
           <div class="p-8">
@@ -261,7 +261,7 @@
             <p class="mt-2 text-sm text-gray-600">{c.p}</p>
             <div class="mt-4 flex flex-wrap gap-2">
               {#each c.bullets as b}
-                <span class="px-2 py-1 rounded border border-gray-200 bg-gray-50 text-[10px] uppercase tracking-wider text-gray-500 font-medium">{b}</span>
+                <span class="px-2 py-1 rounded border border-gray-200 bg-blue-50 text-[10px] uppercase tracking-wider text-gray-500 font-medium">{b}</span>
               {/each}
             </div>
           </div>
