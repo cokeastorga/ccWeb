@@ -522,10 +522,6 @@
             <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`mailto:${emailTo}`}>{emailTo}</a>
           </div>
           <div class="flex items-center gap-3">
-            <span>🔗</span> 
-            <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={linkedin} target="_blank" rel="noopener">/in/cokeastorga</a>
-          </div>
-          <div class="flex items-center gap-3">
             <span>💬</span> 
             <a class="hover:text-blue-600 transition-colors border-b border-gray-200 hover:border-blue-600" href={`https://wa.me/${whatsapp.replace('+','')}`} target="_blank" rel="noopener">WhatsApp Directo</a>
           </div>
