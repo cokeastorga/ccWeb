@@ -47,7 +47,7 @@
             </button>
 
             <a href="/ecommerce-v2" class="text-xl font-bold tracking-tighter uppercase absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:left-auto hover:opacity-70 transition-opacity">
-                AESTHETIC<span class="text-gray-400">.CO</span>
+                AESTHETIC<span class="text-gray-400">.CL</span>
             </a>
 
             <div class="hidden md:flex gap-8 text-sm font-medium text-gray-500">

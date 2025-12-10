@@ -18,7 +18,7 @@ import CategoryStories, { type CategoryStory } from '$lib/components/ecommerce/C
             name: 'Lámpara Akari', 
             price: 120, 
             category: 'Lighting', 
-            image: 'https://images.unsplash.com/photo-1513506003013-953a45bf4817?auto=format&fit=crop&w=800', 
+            image: 'https://www.mistore.jp/shinjuku/shops/living/home_essence/shopnews_list/shopnews08/_jcr_content/root/sectioning_235533930/sectioning/sectioning/sectioning_1019408716/sectioning/sectioning/carousel/item1.transform/uploaded/img.jpg', 
             badge: 'New' 
         },
         { 
@@ -33,7 +33,7 @@ import CategoryStories, { type CategoryStory } from '$lib/components/ecommerce/C
             name: 'Cerámica Raw', 
             price: 45, 
             category: 'Decor', 
-            image: 'https://images.unsplash.com/photo-1578749556935-ef88814b29c3?auto=format&fit=crop&w=800' 
+            image: 'https://tse1.mm.bing.net/th/id/OIP.INNFEk9-aDi_nKPGP5fsnAHaFj?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3' 
         },
         { 
             id: '4', 
@@ -45,9 +45,9 @@ import CategoryStories, { type CategoryStory } from '$lib/components/ecommerce/C
     ];
 
     const categories = [
-        { name: 'Iluminación', img: 'https://images.unsplash.com/photo-1507473888900-52e1adad5462?auto=format&fit=crop&w=600' },
-        { name: 'Mobiliario', img: 'https://images.unsplash.com/photo-1538688536322-a27b7de78e90?auto=format&fit=crop&w=600' },
-        { name: 'Objetos', img: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600' },
+        { name: 'Iluminación', img: 'https://i.pinimg.com/736x/57/3b/81/573b813935c105600e55b1cbeedc45c4.jpg' },
+        { name: 'Mobiliario', img: 'https://www.lavoz.com.ar/resizer/qPe5c1Lmv0s9OdVkJXCEM_PSnh4=/980x640/smart/filters:quality(75):format(webp)/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/Y4SNUNB4C5DQHI3FGR25Y2LSGU.jpg' },
+        { name: 'Objetos', img: 'https://tse3.mm.bing.net/th/id/OIP.g3Dz-MlT6sZb-rVoCfUGRAHaE7?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3' },
     ];
 
     // Lógica para el Modal
@@ -125,7 +125,7 @@ const activeOffers: Offer[] = [
             description: '50% de descuento en nuestra colección de iluminación minimalista. Solo por tiempo limitado.',
             cta: 'Ver Iluminación',
             link: '#shop',
-            image: 'https://images.unsplash.com/photo-1513506003013-953a45bf4817?auto=format&fit=crop&w=1200',
+            image: 'https://tse1.mm.bing.net/th/id/OIP.Sc2YRc5WxKIN_W9qFU8DmwHaE7?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
             bgColor: 'bg-stone-900',
             textColor: 'text-white'
         },
@@ -145,7 +145,7 @@ const activeOffers: Offer[] = [
             description: 'Cerámica Wabi-Sabi importada directamente de Kyoto.',
             cta: 'Descubrir Colección',
             link: '#shop',
-            image: 'https://images.unsplash.com/photo-1616489953121-7788755743a5?auto=format&fit=crop&w=1200',
+            image: 'https://siglosdesabor.net/wp-content/uploads/exquisito-set-ceramica-japonesa.webp',
             bgColor: 'bg-amber-900',
             textColor: 'text-white'
         }
@@ -210,19 +210,19 @@ const activeOffers: Offer[] = [
 
 <section class="relative h-[80vh] w-full bg-gray-100 overflow-hidden flex items-end pb-20 px-6 md:px-12">
     <img 
-        src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=2000" 
+        src="https://i.pinimg.com/originals/10/21/32/102132c9491e53a0111bcdbbed3dc842.jpg" 
         alt="Hero" 
         class="absolute inset-0 w-full h-full object-cover"
     />
     <div class="absolute inset-0 bg-black/10"></div> 
     
     <div class="relative z-10 max-w-2xl animate-in slide-in-from-bottom-10 duration-1000">
-        <span class="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Colección 2024</span>
-        <h1 class="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">
-            Esta Pagina para tiendas pequeñas <br/> Podria ser tuya.
+        <span class="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest mb-4 inline-block">Colección 2026</span>
+        <h1 class="text-5xl md:text-5xl font-serif text-white mb-6 leading-tight">
+            Avance Temporada -  <br/> Vientos Patagonicos
         </h1>
         <button class="bg-white text-black px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors duration-300 font-medium">
-            Simula tu visita
+            Lo nuevo
         </button>
     </div>
 </section>

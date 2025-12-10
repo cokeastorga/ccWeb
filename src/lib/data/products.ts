@@ -15,8 +15,8 @@ export const products: ProductData[] = [
         price: 120,
         category: 'Iluminación',
         images: [
-            'https://images.unsplash.com/photo-1513506003013-953a45bf4817?auto=format&fit=crop&w=1000',
-            'https://images.unsplash.com/photo-1540932296774-3bedde0475a9?auto=format&fit=crop&w=1000' // Segunda imagen simulada
+            'https://tse4.mm.bing.net/th/id/OIP.XUia5j2gz9ibJqj6vfUnRAHaFj?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
+            'https://i.etsystatic.com/10017477/r/il/4c72bd/1885360983/il_794xN.1885360983_o9nf.jpg' // Segunda imagen simulada
         ],
         description: 'Una escultura de luz hecha a mano. Papel washi tradicional sobre una estructura de bambú irregular. Proporciona una luz cálida y difusa ideal para momentos de reflexión.',
         badge: 'New'
@@ -37,7 +37,7 @@ export const products: ProductData[] = [
         name: 'Jarrón Wabi-Sabi',
         price: 45,
         category: 'Decoración',
-        images: ['https://images.unsplash.com/photo-1578749556935-ef88814b29c3?auto=format&fit=crop&w=1000'],
+        images: ['https://tse1.mm.bing.net/th/id/OIP.xMhcrGWyXWNCcO61iO9MqQHaHa?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'],
         description: 'Cerámica artesanal con acabado texturizado. Cada pieza es única, celebrando la belleza de la imperfección.',
     },
     {
