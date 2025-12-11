@@ -201,7 +201,7 @@
         { href:'https://satplatform.vercel.app', alt:'SATPlatform', src:'/logos/logosat.jpg' },
         { href:'https://deliciasporteñas.cl', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg' },
         { href:'https://finderweb.vercel.app/', alt:'FinderApp', src:'/logos/logofinder.jpg' },
-        { href:'https://asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg' }
+        { href:'https://www.asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg' }
       ] as c}
         <a href={c.href} target="_blank" rel="noopener" class="flex flex-col items-center space-y-2 group animated-item" use:animateOnScroll>
           <img loading="lazy" src={c.src} alt={c.alt} class="h-12 w-auto object-contain mix-blend-multiply" />
