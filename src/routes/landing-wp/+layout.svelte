@@ -2,6 +2,7 @@
     import '../../app.css';
     import { page } from '$app/stores';
     import { fade } from 'svelte/transition';
+import PromoPopupLanding from '$lib/components/landing/PromoPopupLanding.svelte';
 
     let isMobileMenuOpen = false;
 </script>
@@ -45,6 +46,8 @@
     <main class="flex-1 pt-20">
         <slot />
     </main>
+
+    <PromoPopupLanding />
 
     <footer class="bg-gray-900 text-gray-400 py-12 px-6">
         <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 mb-8 border-b border-gray-800 pb-8">
