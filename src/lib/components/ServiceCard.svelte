@@ -1,12 +1,13 @@
 <script>
     import { spring } from 'svelte/motion';
-    import { pannable } from '$lib/actions/pannable'; // Ajusta la ruta según tu estructura
+    import { pannable } from '$lib/actions/pannable';
+    // Ajusta la ruta según tu estructura
 
-    export let data; // Recibe el objeto { icon, title, desc, bullets }
+    export let data;
+    // Recibe el objeto { icon, title, desc, bullets }
 
     // Estado para saber si estamos arrastrando (para el cursor y z-index)
     let isDragging = false;
-
     // Configuración del resorte
     const coords = spring({ x: 0, y: 0 }, {
         stiffness: 0.2,
@@ -37,7 +38,7 @@
 </script>
 
 <article 
-    class="card-glass rounded-xl p-8 bg-white/80 backdrop-blur shadow-lg select-none touch-none
+    class="card-glass rounded-xl p-8 bg-white/80 backdrop-blur shadow-lg select-none touch-pan-y lg:touch-none
            {isDragging ? 'z-50 cursor-grabbing' : 'z-0 cursor-grab'}"
     use:pannable
     on:panstart={handlePanStart}
@@ -45,7 +46,8 @@
     on:panend={handlePanEnd}
     style="transform: translate({$coords.x}px, {$coords.y}px) rotate({$coords.x * 0.1}deg)"
 >
-    <div class="flex items-center gap-4 pointer-events-none"> <div class="h-10 w-10 text-blue-300 flex items-center justify-center flex-shrink-0 bg-blue-50 rounded-lg">
+    <div class="flex items-center gap-4 pointer-events-none"> 
+        <div class="h-10 w-10 text-blue-300 flex items-center justify-center flex-shrink-0 bg-blue-50 rounded-lg">
             {@html data.icon}
         </div>
         <h3 class="text-xl font-bold text-gray-900">{data.title}</h3>

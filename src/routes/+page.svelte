@@ -77,11 +77,11 @@
   };
 
   const servicesData = [
-    { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG, rutas protegidas','Pasarelas de Pago','CI/CD automatizado'] },
-    { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura','Threat modeling (OWASP)','Planes de respuesta'] },
-    { icon: icons.zap, title:'Automatización & IA', desc:'Optimización de procesos con scripts y modelos de lenguaje (LLMs).', bullets:['Procesamiento de documentos','Asistentes virtuales','Análisis de datos'] },
-    { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infraestructura como código. Despliegues escalables.', bullets:['Pipelines CI/CD','Monitoreo y Logs','Optimización de costos'] },
-    { icon: icons.chat, title:'Consultoría Técnica', desc:'Asesoramiento estratégico para líderes de proyecto.', bullets:['Evaluación de arquitectura','Revisión de código','Planificación de Roadmap'] }
+    { icon: icons.code, title:'Desarrollo Web & Apps', desc:'Landing pages y apps en SvelteKit. Código limpio y arquitectura serverless.', bullets:['SSR/SSG., Rutas protegidas.','Pasarelas de Pago.','CI/CD automatizado.'] },
+    { icon: icons.shield, title:'Ciberseguridad', desc:'Hardenning de aplicaciones y auditorías de seguridad.', bullets:['Revisión de arquitectura.','Threat modeling (OWASP).','Planes de respuesta.'] },
+    { icon: icons.zap, title:'Automatización & IA', desc:'Optimización de procesos con scripts y modelos de lenguaje (LLMs).', bullets:['Procesamiento de documentos.','Asistentes virtuales.','Análisis de datos.'] },
+    { icon: icons.cloud, title:'Cloud & DevOps', desc:'Infraestructura como código. Despliegues escalables.', bullets:['Pipelines CI/CD.','Monitoreo y Logs.','Optimización de costos.'] },
+    { icon: icons.chat, title:'Consultoría Técnica', desc:'Asesoramiento estratégico para líderes de proyecto.', bullets:['Evaluación de arquitectura.','Revisión de código.','Planificación de Roadmap.'] }
   ];
 
   onMount(() => {
@@ -194,17 +194,34 @@
 
 <section class="py-12 border-y border-gray-100 bg-white/50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-xs tracking-widest uppercase text-gray-400 mb-8 font-semibold animated-item" use:animateOnScroll>Portafolio de trabajo</p>
+    <p class="text-center text-xs tracking-widest uppercase text-gray-400 mb-8 font-semibold animated-item" use:animateOnScroll>
+        Portafolio de trabajo
+    </p>
+    
     <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
       {#each [
-        { href:'https://enfermeriasendo.cl', alt:'SENDO', src:'/logos/logosendo.jpg' },
-        { href:'https://satplatform.vercel.app', alt:'SATPlatform', src:'/logos/logosat.jpg' },
-        { href:'https://deliciasporteñas.cl/latiendita', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg' },
-        { href:'https://finderweb.vercel.app/', alt:'FinderApp', src:'/logos/logofinder.jpg' },
-        { href:'https://www.asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg' }
+        // h-14 = Un poco más grande
+        { href:'https://enfermeriasendo.cl', alt:'SENDO', src:'/logos/logosendo.jpg', size: 'h-17' }, 
+        
+        // h-16 = Grande (Destacado)
+        { href:'https://satplatform.vercel.app', alt:'SATPlatform', src:'/logos/logosat.jpg', size: 'h-17' }, 
+        
+        // h-12 = Tamaño Normal
+        { href:'https://deliciasporteñas.cl/latiendita', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg', size: 'h-15' }, 
+        
+        // h-10 = Un poco más chico
+        { href:'https://finderweb.vercel.app/', alt:'FinderApp', src:'/logos/logofinder.jpg', size: 'h-15' }, 
+        
+        // h-14 = Un poco más grande
+        { href:'https://www.asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg', size: 'h-15' }
       ] as c}
         <a href={c.href} target="_blank" rel="noopener" class="flex flex-col items-center space-y-2 group animated-item" use:animateOnScroll>
-          <img loading="lazy" src={c.src} alt={c.alt} class="h-12 w-auto object-contain mix-blend-multiply" />
+          <img 
+            loading="lazy" 
+            src={c.src} 
+            alt={c.alt} 
+            class="{c.size} w-auto object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-110" 
+          />
         </a>
       {/each}
     </div>
@@ -290,7 +307,7 @@
             <div class="h-10 w-10 flex items-center justify-center border border-gray-200 rounded-full bg-white text-blue-600 shadow-sm">{@html icons.check}</div>
             <div>
               <h3 class="font-bold text-gray-900">Resultados Medibles</h3>
-              <p class="text-sm text-gray-600">KPIs claros antes de escribir código.</p>
+              <p class="text-sm text-gray-600">KPI's claros antes de escribir código.</p>
             </div>
           </li>
            <li class="flex gap-4 animated-item" use:animateOnScroll>
