@@ -9,7 +9,7 @@
   import FlyingMascot from '$lib/components/FlyingMascot.svelte';
 
   // —— CONFIG ——
-  const emailTo = 'cokeastorgac@gmail.com';
+  const emailTo = 'jor.astorga@ccsolution.cl';
   const whatsapp = '+56985841810';
   const siteUrl = 'https://ccsolution.cl';
   

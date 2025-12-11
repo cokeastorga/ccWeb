@@ -399,7 +399,7 @@
         <form class="flex gap-2 max-w-sm mx-auto">
             <input 
                 type="email" 
-                placeholder="cokeastorgac@gmail.com" 
+                placeholder="jor.astorga@ccsolution.cl" 
                 class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white transition-colors placeholder:text-gray-500 text-white"
             />
             <button class="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors">
