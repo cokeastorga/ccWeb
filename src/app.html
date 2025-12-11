@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="es" class="scroll-smooth">
-  <head>
+ <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width" />
+    
+    <meta property="og:image" content="%sveltekit.assets%/og-image.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CC IT & Solutions | Soluciones Digitales" />
+    
     %sveltekit.head%
-  </head>
+</head>
   <body class="bg-slate-950 text-slate-100 antialiased" data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
