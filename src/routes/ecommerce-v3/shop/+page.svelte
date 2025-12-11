@@ -349,7 +349,7 @@
             </div>
 
             {#if filteredProducts.length > 0}
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-6">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-6">
                     {#each filteredProducts as product, i (product.id)}
                         <div in:fly={{ y: 20, duration: 400, delay: (i % 8) * 50 }}>
                             <div class="relative group">
