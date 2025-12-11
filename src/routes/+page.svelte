@@ -174,7 +174,7 @@
 
     <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed animated-item" use:animateOnScroll>
       Ingeniería de software de alto nivel.
-      Desarrollo SvelteKit, ciberseguridad y automatización para empresas que valoran la calidad.
+      Desarrollo SvelteKit, ciberseguridad, automatización para pequeñas y medianas empresas.
     </p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animated-item" use:animateOnScroll>
