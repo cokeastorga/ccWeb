@@ -4,23 +4,21 @@ type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 // @ts-ignore
 type MatcherParam<M> = M extends (param : string) => param is infer U ? U extends string ? U : string : string;
 type RouteParams = {  };
-type RouteId = '/';
+type RouteId = '/landing-wp';
 type MaybeWithVoid<T> = {} extends T ? T | void : T;
 export type RequiredKeys<T> = { [K in keyof T]-?: {} extends { [P in K]: T[K] } ? never : K; }[keyof T];
 type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Partial<Pick<App.PageData, keyof T & keyof App.PageData>> & Record<string, any>>
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
-type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/ecommerce-v2" | "/ecommerce-v2/checkout" | "/ecommerce-v2/product/[id]" | "/ecommerce-v2/shop" | "/ecommerce-v2/success" | "/ecommerce-v3" | "/ecommerce-v3/checkout" | "/ecommerce-v3/product/[id]" | "/ecommerce-v3/shop" | "/ecommerce-v3/success" | "/gracias" | "/landing-wp" | "/privacidad" | "/terminos" | null
-type LayoutParams = RouteParams & { id?: string }
-type LayoutParentData = EnsureDefined<{}>;
+type PageParentData = Omit<EnsureDefined<import('../$types.js').LayoutData>, keyof LayoutData> & EnsureDefined<LayoutData>;
+type LayoutRouteId = RouteId | "/landing-wp"
+type LayoutParams = RouteParams & {  }
+type LayoutParentData = EnsureDefined<import('../$types.js').LayoutData>;
 
 export type PageServerData = null;
 export type PageData = Expand<PageParentData>;
 export type PageProps = { params: RouteParams; data: PageData }
 export type LayoutServerData = null;
-export type LayoutLoad<OutputData extends OutputDataShape<LayoutParentData> = OutputDataShape<LayoutParentData>> = Kit.Load<LayoutParams, LayoutServerData, LayoutParentData, OutputData, LayoutRouteId>;
-export type LayoutLoadEvent = Parameters<LayoutLoad>[0];
-export type LayoutData = Expand<Omit<LayoutParentData, keyof LayoutParentData & EnsureDefined<LayoutServerData>> & OptionalUnion<EnsureDefined<LayoutParentData & EnsureDefined<LayoutServerData>>>>;
+export type LayoutData = Expand<LayoutParentData>;
 export type LayoutProps = { params: LayoutParams; data: LayoutData; children: import("svelte").Snippet }

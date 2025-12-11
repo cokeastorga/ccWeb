@@ -18,26 +18,29 @@ export const nodes = [
 	() => import('./nodes/14'),
 	() => import('./nodes/15'),
 	() => import('./nodes/16'),
-	() => import('./nodes/17')
+	() => import('./nodes/17'),
+	() => import('./nodes/18'),
+	() => import('./nodes/19')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [4],
-		"/ecommerce-v2": [5,[2]],
-		"/ecommerce-v2/checkout": [6,[2]],
-		"/ecommerce-v2/product/[id]": [7,[2]],
-		"/ecommerce-v2/shop": [8,[2]],
-		"/ecommerce-v2/success": [9,[2]],
-		"/ecommerce-v3": [10,[3]],
-		"/ecommerce-v3/checkout": [11,[3]],
-		"/ecommerce-v3/product/[id]": [12,[3]],
-		"/ecommerce-v3/shop": [13,[3]],
-		"/ecommerce-v3/success": [14,[3]],
-		"/gracias": [15],
-		"/privacidad": [16],
-		"/terminos": [17]
+		"/": [5],
+		"/ecommerce-v2": [6,[2]],
+		"/ecommerce-v2/checkout": [7,[2]],
+		"/ecommerce-v2/product/[id]": [8,[2]],
+		"/ecommerce-v2/shop": [9,[2]],
+		"/ecommerce-v2/success": [10,[2]],
+		"/ecommerce-v3": [11,[3]],
+		"/ecommerce-v3/checkout": [12,[3]],
+		"/ecommerce-v3/product/[id]": [13,[3]],
+		"/ecommerce-v3/shop": [14,[3]],
+		"/ecommerce-v3/success": [15,[3]],
+		"/gracias": [16],
+		"/landing-wp": [17,[4]],
+		"/privacidad": [18],
+		"/terminos": [19]
 	};
 
 export const hooks = {

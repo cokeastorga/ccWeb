@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>Jorge Astorga — Ingeniería de Software</title>
+  <title>Jorge Astorga — Ingeniería en Software</title>
 </svelte:head>
 
 <div class="fixed inset-0 z-[-1] pointer-events-none bg-dark-950">
@@ -64,6 +64,13 @@
             >
                 • Tienda Enterprise (V3)
             </a>
+            <a 
+                href="/landing-wp" 
+                class="block p-2 text-sm text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false}
+            >
+                • Landing Corporativa (WP)
+            </a>
             
         </div>
     {/if}
@@ -115,6 +122,13 @@
                 on:click={() => mobileOpen = false}
             >
                 • Tienda Enterprise (V3)
+            </a>
+            <a 
+                href="/landing-wp" 
+                class="block p-2 text-sm text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false}
+            >
+                • Landing Corporativa (WP)
             </a>
             
         </div>

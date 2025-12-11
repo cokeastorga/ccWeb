@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/ecommerce-v3/shop/+page.ts";
+import * as universal from "../../../../src/routes/ecommerce-v3/product/[id]/+page.ts";
 export { universal };
-export { default as component } from "../../../../src/routes/ecommerce-v3/shop/+page.svelte";
+export { default as component } from "../../../../src/routes/ecommerce-v3/product/[id]/+page.svelte";

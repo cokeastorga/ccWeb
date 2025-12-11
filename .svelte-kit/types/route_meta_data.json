@@ -54,6 +54,10 @@
 	"/gracias": [
 		"src/routes/+layout.ts"
 	],
+	"/landing-wp": [
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
 	"/privacidad": [
 		"src/routes/+layout.ts"
 	],
