@@ -128,6 +128,52 @@
     </div>
 </section>
 
+<section id="testimonios" class="py-20 px-6 bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-16" use:reveal>
+            Lo que dicen nuestros clientes
+        </h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-8 rounded-2xl bg-gray-50 hover:shadow-lg transition-shadow duration-300" use:reveal={{ delay: 100 }}>
+                <div class="flex text-blue-500 mb-4">★★★★★</div>
+                <p class="text-gray-600 mb-6 italic">"Increíble servicio. Nos ayudaron a ordenar nuestras finanzas en tiempo récord. Totalmente recomendado."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">JP</div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">Juan Pérez</p>
+                        <p class="text-xs text-gray-500">CEO, TechStart</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-2xl bg-gray-50 hover:shadow-lg transition-shadow duration-300" use:reveal={{ delay: 200 }}>
+                <div class="flex text-blue-500 mb-4">★★★★★</div>
+                <p class="text-gray-600 mb-6 italic">"La asesoría legal fue impecable. Nos evitaron un problema gigante con contratos antiguos."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-600">MG</div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">María González</p>
+                        <p class="text-xs text-gray-500">Fundadora, GreenLife</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-2xl bg-gray-50 hover:shadow-lg transition-shadow duration-300" use:reveal={{ delay: 300 }}>
+                <div class="flex text-blue-500 mb-4">★★★★★</div>
+                <p class="text-gray-600 mb-6 italic">"Profesionalismo puro. Llevamos 3 años trabajando con ellos y el crecimiento ha sido sostenido."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-600">CR</div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">Carlos Ruiz</p>
+                        <p class="text-xs text-gray-500">Director, Constructora Ruiz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="contacto" class="py-20 px-6 bg-blue-600">
     <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
         
