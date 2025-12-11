@@ -41,7 +41,7 @@
 
             <div class="w-full md:w-1/2 h-64 md:h-auto relative bg-gray-100">
                 <img 
-                    src="/promo-landing.jpg" 
+                    src="/flayer_navi3.jpg" 
                     alt="Oferta Landing Page"
                     class="absolute inset-0 w-full h-full object-cover"
                 />
