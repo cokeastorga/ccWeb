@@ -199,7 +199,7 @@
       {#each [
         { href:'https://enfermeriasendo.cl', alt:'SENDO', src:'/logos/logosendo.jpg' },
         { href:'https://satplatform.vercel.app', alt:'SATPlatform', src:'/logos/logosat.jpg' },
-        { href:'https://deliciasporteñas.cl', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg' },
+        { href:'https://deliciasporteñas.cl/latiendita', alt:'Delicias Porteñas', src:'/logos/logodelicias.jpg' },
         { href:'https://finderweb.vercel.app/', alt:'FinderApp', src:'/logos/logofinder.jpg' },
         { href:'https://www.asvipchile.cl', alt:'Asvip Chile', src:'/logos/logoasvip.jpg' }
       ] as c}
