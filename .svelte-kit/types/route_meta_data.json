@@ -27,6 +27,30 @@
 		"src/routes/ecommerce-v2/+layout.ts",
 		"src/routes/+layout.ts"
 	],
+	"/ecommerce-v3": [
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts",
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v3/checkout": [
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v3/product/[id]": [
+		"src/routes/ecommerce-v3/product/[id]/+page.ts",
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v3/shop": [
+		"src/routes/ecommerce-v3/shop/+page.ts",
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/ecommerce-v3/success": [
+		"src/routes/ecommerce-v3/+layout.ts",
+		"src/routes/+layout.ts"
+	],
 	"/gracias": [
 		"src/routes/+layout.ts"
 	],

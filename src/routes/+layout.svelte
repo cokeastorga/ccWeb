@@ -1,5 +1,7 @@
 <script lang="ts">
   import '../app.css';
+  import { slide } from 'svelte/transition';
+  let isDropdownOpen = false;
   let year = new Date().getFullYear();
   let mobileOpen = false;
 </script>
@@ -30,9 +32,42 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="/ecommerce-v2" class="hidden md:block text-xs font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-500/20 transition-all transform hover:-translate-y-0.5">
-          Plantilla: E-commerce
-        </a>
+       <div class="w-full flex flex-col mt-2">
+    <button 
+        on:click={() => isDropdownOpen = !isDropdownOpen}
+        class="flex justify-between items-center w-full text-left text-sm font-bold text-white bg-brand-600 py-2 px-3 rounded-xl shadow-md transition-colors hover:bg-brand-700"
+    >
+        <span>Plantillas Web</span>
+        <svg 
+            class="w-4 h-4 transition-transform duration-300 {isDropdownOpen ? 'rotate-180' : ''}" 
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+        >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+
+    {#if isDropdownOpen}
+        <div transition:slide={{ duration: 300 }} class="flex flex-col gap-2 pl-4 mt-2 border-l-2 border-brand-600/20">
+            
+            <a 
+                href="/ecommerce-v2" 
+                class="block p-2 text-sm text-gray-600 hover:text-brand-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false} 
+            >
+                • Tienda Boutique (V2)
+            </a>
+
+            <a 
+                href="/ecommerce-v3/shop" 
+                class="block p-2 text-sm text-gray-600 hover:text-brand-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false}
+            >
+                • Tienda Enterprise (V3)
+            </a>
+            
+        </div>
+    {/if}
+</div>
         <button 
   aria-label="Abrir menú"
   class="md:hidden text-gray-500 hover:text-brand-600" 
@@ -49,8 +84,42 @@
         <a href="/#servicios" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Servicios</a>
         <a href="/#casos" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Casos</a>
         <a href="/#contacto" class="text-sm font-medium text-gray-600 py-3 hover:bg-gray-50 rounded-xl transition-colors" on:click={() => (mobileOpen=false)}>Agendar llamada</a>
-        <a href="/ecommerce-v2" class="text-sm font-bold text-white bg-brand-600 py-3 rounded-xl shadow-md mt-2" on:click={() => (mobileOpen=false)}>Plantilla: E-commerce</a>
-      </div>
+<div class="w-full flex flex-col mt-2">
+    <button 
+        on:click={() => isDropdownOpen = !isDropdownOpen}
+        class="flex justify-between items-center w-full text-left text-sm font-bold text-white bg-brand-600 py-3 px-4 rounded-xl shadow-md transition-colors hover:bg-brand-700"
+    >
+        <span>Plantillas E-commerce</span>
+        <svg 
+            class="w-4 h-4 transition-transform duration-300 {isDropdownOpen ? 'rotate-180' : ''}" 
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+        >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+
+    {#if isDropdownOpen}
+        <div transition:slide={{ duration: 300 }} class="flex flex-col gap-2 pl-4 mt-2 border-l-2 border-brand-600/20">
+            
+            <a 
+                href="/ecommerce-v2" 
+                class="block p-2 text-sm text-gray-600 hover:text-brand-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false} 
+            >
+                • Tienda Boutique (V2)
+            </a>
+
+            <a 
+                href="/ecommerce-v3/shop" 
+                class="block p-2 text-sm text-gray-600 hover:text-brand-600 font-medium transition-colors"
+                on:click={() => mobileOpen = false}
+            >
+                • Tienda Enterprise (V3)
+            </a>
+            
+        </div>
+    {/if}
+</div>      </div>
       
     {/if}
   </header>

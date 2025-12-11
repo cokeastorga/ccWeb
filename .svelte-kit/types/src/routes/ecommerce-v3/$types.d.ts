@@ -4,17 +4,17 @@ type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 // @ts-ignore
 type MatcherParam<M> = M extends (param : string) => param is infer U ? U extends string ? U : string : string;
 type RouteParams = {  };
-type RouteId = '/';
+type RouteId = '/ecommerce-v3';
 type MaybeWithVoid<T> = {} extends T ? T | void : T;
 export type RequiredKeys<T> = { [K in keyof T]-?: {} extends { [P in K]: T[K] } ? never : K; }[keyof T];
 type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Partial<Pick<App.PageData, keyof T & keyof App.PageData>> & Record<string, any>>
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
-type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/ecommerce-v2" | "/ecommerce-v2/checkout" | "/ecommerce-v2/product/[id]" | "/ecommerce-v2/shop" | "/ecommerce-v2/success" | "/ecommerce-v3" | "/ecommerce-v3/checkout" | "/ecommerce-v3/product/[id]" | "/ecommerce-v3/shop" | "/ecommerce-v3/success" | "/gracias" | "/privacidad" | "/terminos" | null
+type PageParentData = Omit<EnsureDefined<import('../$types.js').LayoutData>, keyof LayoutData> & EnsureDefined<LayoutData>;
+type LayoutRouteId = RouteId | "/ecommerce-v3" | "/ecommerce-v3/checkout" | "/ecommerce-v3/product/[id]" | "/ecommerce-v3/shop" | "/ecommerce-v3/success"
 type LayoutParams = RouteParams & { id?: string }
-type LayoutParentData = EnsureDefined<{}>;
+type LayoutParentData = EnsureDefined<import('../$types.js').LayoutData>;
 
 export type PageServerData = null;
 export type PageData = Expand<PageParentData>;
