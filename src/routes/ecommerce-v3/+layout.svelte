@@ -9,7 +9,7 @@
     import Toast from '$lib/components/ecommerce/Toast.svelte';
     import { openCart } from '$lib/stores/ui';
     import { cartCount } from '$lib/stores/cart';
-    import PromoPopup from '$lib/components/ecommerce/PromoPopup.svelte';
+    import PromoPopupV3 from '$lib/components/ecommerce/PromoPopupV3.svelte';
 
     let isMobileMenuOpen = false;
     let y = 0;
@@ -73,5 +73,5 @@
     <CartDrawer />
     <Toast />
 
-    <PromoPopup />
+    <PromoPopupV3 />
 </div>
