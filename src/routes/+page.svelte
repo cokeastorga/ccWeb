@@ -492,11 +492,7 @@
          <label class="block text-xs uppercase tracking-wider font-bold text-gray-500 mb-2" for="mensaje">Mensaje</label>
          <textarea id="mensaje" name="message" rows={4} required class="input" placeholder="Cuéntame brevemente tu idea."></textarea>
        </div>
-       
-       {#if formStatus === 'error'}
-         <div class="rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-600 text-center">{formMessage}</div>
-       {/if}
-       
+                
        <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest">
   Enviar Solicitud
 </button>
