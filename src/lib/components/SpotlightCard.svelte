@@ -28,7 +28,7 @@
       opacity: {opacity};
       background: radial-gradient(
         600px circle at {x}px {y}px, 
-        rgba(80, 2500, 246, 0.15), 
+        rgba(80, 250, 246, 0.15), 
         transparent 40%
       );
     "

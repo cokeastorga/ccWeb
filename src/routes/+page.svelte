@@ -11,36 +11,17 @@
   // —— CONFIG ——
   const emailTo = 'jor.astorga@ccsolution.cl';
   const whatsapp = '+56985841810';
-  const siteUrl = 'https://ccsolution.cl';
+  const siteUrl = 'https://www.ccsolution.cl';
   
   // URL JSON Lottie de la mariposa
   const butterflyLottie = "https://lottie.host/4a6d6e6a-7f8a-4b9d-9c8e-2f3a4b5c6d7e/bI5X3J2Y1Z.json";
 
   // —— STATE ——
-  let formStatus: 'idle' | 'submitting' | 'error' = 'idle';
-  let formMessage = '';
   let showBackToTop = false;
   let reducedMotion = false;
 
   // —— HELPERS ——
-  async function enviar(e: Event) {
-    e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    if (formStatus === 'submitting') return;
-    formStatus = 'submitting';
-    formMessage = '';
-    try {
-      const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-      if (res.ok) goto('/gracias');
-      else throw new Error('Respuesta no fue OK');
-    } catch (err) {
-      console.error(err);
-      formStatus = 'error';
-      formMessage = 'Error al enviar, por favor intenta de nuevo.';
-    }
-  }
-
-  function animateOnScroll(node: HTMLElement) {
+   function animateOnScroll(node: HTMLElement) {
     if (reducedMotion) return {};
     if (typeof IntersectionObserver !== 'undefined') {
       const io = new IntersectionObserver((entries) => {
@@ -474,10 +455,9 @@
      </div>
 
      <form class="card-glass rounded-2xl p-8 space-y-6 animated-item" use:animateOnScroll
-           action={`https://formsubmit.co/${emailTo}`}
-           method="POST"
-           on:submit={enviar}
-           aria-label="Formulario de contacto">
+      action={`https://formsubmit.co/${emailTo}`}
+      method="POST"
+      aria-label="Formulario de contacto">
        <input type="hidden" name="_captcha" value="false" />
        <input type="hidden" name="_next" value={`${siteUrl}/gracias`} />
 
@@ -517,9 +497,9 @@
          <div class="rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-600 text-center">{formMessage}</div>
        {/if}
        
-       <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest" disabled={formStatus === 'submitting'}>
-         {#if formStatus === 'submitting'} Procesando... {:else} Enviar Solicitud {/if}
-       </button>
+       <button type="submit" class="btn btn-primary w-full py-4 text-sm uppercase tracking-widest">
+  Enviar Solicitud
+</button>
      </form>
    </div>
  </div>
