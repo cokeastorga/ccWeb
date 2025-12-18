@@ -9,6 +9,8 @@ export default {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        'christmas-red': '#D42426',
+        'christmas-green': '#165B33',
         // COLOR DE ACENTO: Violeta Tecnológico (Elegante sobre blanco)
         brand: {
           50: '#f5f3ff',
