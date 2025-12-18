@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { inject } from '@vercel/analytics';
+  import { injectAnalytics } from '@vercel/analytics/sveltekit'
   import { dev } from '$app/environment';
   import '../app.css';
   import { slide } from 'svelte/transition';
@@ -8,7 +8,7 @@
   let mobileOpen = false;
 
   if (!dev) {
-    inject();
+    injectAnalytics();
   }
 </script>
 
