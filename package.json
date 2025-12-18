@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.12",
-    "@emailjs/browser": "^4.4.1"
+    "@emailjs/browser": "^4.4.1",
+    "@vercel/analytics": "^1.6.1"
   }
 }

@@ -1,9 +1,15 @@
 <script lang="ts">
+  import { inject } from '@vercel/analytics';
+  import { dev } from '$app/environment';
   import '../app.css';
   import { slide } from 'svelte/transition';
   let isDropdownOpen = false;
   let year = new Date().getFullYear();
   let mobileOpen = false;
+
+  if (!dev) {
+    inject();
+  }
 </script>
 
 <svelte:head>
