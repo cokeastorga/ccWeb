@@ -2,10 +2,10 @@
   import { injectAnalytics } from '@vercel/analytics/sveltekit'
   import { dev } from '$app/environment';
   import '../app.css';
-  import ChristmasTheme from '$lib/components/ChristmasTheme.svelte';
+  //import ChristmasTheme from '$lib/components/ChristmasTheme.svelte';
   import { onMount } from 'svelte';
   import { slide } from 'svelte/transition';
-  import Snowfall from '$lib/components/Snowfall.svelte';
+  //import Snowfall from '$lib/components/Snowfall.svelte';
   let isDropdownOpen = false;
   let year = new Date().getFullYear();
   let mobileOpen = false;
@@ -152,8 +152,7 @@
   </header>
 
   <main class="flex-1">
-    <ChristmasTheme />
-    <Snowfall />
+
     <slot />
   </main>
 
